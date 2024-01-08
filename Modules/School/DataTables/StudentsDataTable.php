@@ -97,7 +97,7 @@ class StudentsDataTable extends DataTable
      */
     public function html()
     {
-        $created_at = 2;
+        $created_at = 1;
         return $this->builder()
                 ->setTableId('students-table')
                 ->columns($this->getColumns())

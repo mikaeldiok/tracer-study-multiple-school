@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudentsImport implements ToCollection, WithHeadingRow
 {
-    protected Request $request;
+    protected $request;
 
     public function __construct(Request $request)
     {
@@ -45,6 +45,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
                             'birth_place'               => $row['birth_place'],
                             'birth_date'                => $birth_date,
                             'year_class'                => $row['year_class'],
+                            'year_graduate'             => $row['year_graduate'],
                             'major'                     => $row['major'],
                             'height'                    => $row['height'],
                             'weight'                    => $row['weight'],

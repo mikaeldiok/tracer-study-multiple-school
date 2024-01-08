@@ -4,5 +4,6 @@
     "Comment": false,
     "Core": true,
     "School": true,
-    "Mkstarter": true
+    "Mkstarter": true,
+    "Tracer": true
 }

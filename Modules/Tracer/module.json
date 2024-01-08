@@ -1,0 +1,13 @@
+{
+    "name": "Tracer",
+    "alias": "tracer",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Tracer\\Providers\\TracerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -4,16 +4,16 @@
         <div class="form-group">
             <?php
             $field_name = 'available';
-            $field_lable = label_case("Available?");
+            $field_lable = label_case("Data Tracer");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                '1' => 'Ya',
+                '1' => 'Ada',
                 '0' => 'Tidak',
             ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->select($field_name, $select_options,1)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -69,7 +69,7 @@
             $field_name = 'gender';
             $field_lable = label_case($field_name);
             $field_placeholder = "-- Pilih --";
-            $required = "required";
+            $required = "";
             $select_options = [
                 'L' => 'Laki-laki',
                 'P' => 'Perempuan',
@@ -87,7 +87,7 @@
             $field_name = 'religion';
             $field_lable = label_case($field_name);
             $field_placeholder = "-- Pilih --";
-            $required = "required";
+            $required = "";
             $select_options = [
                 'Islam'     => 'Islam',
                 'Kristen'   => 'Kristen',
@@ -109,7 +109,7 @@
             $field_name = 'birth_place';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable;
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
@@ -134,25 +134,37 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-4">
         <div class="form-group">
             <?php
             $field_name = 'year_class';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable;
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-4">
+        <div class="form-group">
+            <?php
+            $field_name = 'year_graduate';
+            $field_lable = __("school::$module_name.$field_name");
+            $field_placeholder = $field_lable;
+            $required = "required";
+            ?>
+            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+        </div>
+    </div>
+    <div class="col-4">
         <div class="form-group">
             <?php
             $field_name = 'major';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = "-- Pilih --";
-            $required = "required";
+            $required = "";
             $select_options = $options['majors'];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -167,7 +179,7 @@
             $field_name = 'height';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable." (Cm)";
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
@@ -179,7 +191,7 @@
             $field_name = 'weight';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable." (Kg)";
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}

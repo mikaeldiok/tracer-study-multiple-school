@@ -8,6 +8,7 @@ return [
     'birth_place'               => 'Birth Place',
     'birth_date'                => 'Birth Date',
     'year_class'                => 'Year Class',
+    'year_graduate'             => 'Graduate Year',
     'major'                     => 'Major',
     'height'                    => 'Height',
     'weight'                    => 'Weight',

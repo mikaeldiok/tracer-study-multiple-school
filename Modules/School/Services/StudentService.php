@@ -34,6 +34,9 @@ use App\Models\Userprofile;
 
 class StudentService{
 
+    public $module_name;
+    public $module_title;
+
     public function __construct()
         {        
         $this->module_title = Str::plural(class_basename(Student::class));

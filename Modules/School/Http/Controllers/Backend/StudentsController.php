@@ -14,6 +14,8 @@ use Log;
 use Modules\School\Services\StudentService;
 use Modules\School\DataTables\StudentsDataTable;
 use Modules\School\Http\Requests\Backend\StudentsRequest;
+use Modules\Tracer\DataTables\StudentRecordsDataTable;
+use Modules\Tracer\Services\RecordService;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
 
@@ -22,8 +24,9 @@ class StudentsController extends Controller
     use Authorizable;
 
     protected $studentService;
+    protected $recordService;
 
-    public function __construct(StudentService $studentService)
+    public function __construct(StudentService $studentService, RecordService $recordService)
     {
         // Page Title
         $this->module_title = trans('menu.school.students');
@@ -41,6 +44,7 @@ class StudentsController extends Controller
         $this->module_model = "Modules\School\Entities\Student";
 
         $this->studentService = $studentService;
+        $this->recordService = $recordService;
     }
 
     /**
@@ -155,32 +159,24 @@ class StudentsController extends Controller
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
+        $module_name_records = "records";
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Show';
+        $module_action = 'List';
 
-        $students = $this->studentService->show($id);
 
-        $$module_name_singular = $students->data;
+        $dataTable = new StudentRecordsDataTable($this->recordService,$id);
+        $student = $this->studentService->getStudentById($id)->data;
 
-        //determine connections
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
 
-        $activities = Activity::where('subject_type', '=', $module_model)
-            ->where('log_name', '=', $module_name)
-            ->where('subject_id', '=', $id)
-            ->latest()
-            ->paginate();
-
-        return view(
-            "school::backend.$module_name.show",
-            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'activities','driver')
+        return $dataTable->render("school::backend.$module_path.show",
+            compact('module_title', 'module_name', 'module_name_records', 'module_icon','student', 'module_action')
         );
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -205,7 +201,7 @@ class StudentsController extends Controller
         $$module_name_singular = $students->data;
 
         $options = $this->studentService->prepareOptions();
-        
+
         return view(
             "school::backend.$module_name.edit",
             compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options')
@@ -234,7 +230,7 @@ class StudentsController extends Controller
         $this->validate($request, [
             'photo'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
         $students = $this->studentService->update($request,$id);
 
         $$module_name_singular = $students->data;
@@ -366,7 +362,7 @@ class StudentsController extends Controller
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
-        
+
         return redirect("admin/$module_name");
     }
 
@@ -394,7 +390,7 @@ class StudentsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'Import';
-        
+
         $students = $this->studentService->import($request);
 
         $import = $students->data;
@@ -404,7 +400,7 @@ class StudentsController extends Controller
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
-        
+
         return redirect("admin/$module_name");
     }
 

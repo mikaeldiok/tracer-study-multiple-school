@@ -1,41 +1,47 @@
 @extends('backend.layouts.app')
 
-@section('title') {{ __($module_action) }} {{ $module_title }} @endsection
+@section('title') {{ __($module_action) }} {{ $module_title }} @stop
 
 @section('breadcrumbs')
 <x-backend-breadcrumbs>
-    <x-backend-breadcrumb-item route='{{route("backend.$module_name.index")}}' icon='{{ $module_icon }}' >
-        {{ $module_title }}
-    </x-backend-breadcrumb-item>
-    <x-backend-breadcrumb-item type="active">{{ __($module_action) }}</x-backend-breadcrumb-item>
+    <x-backend-breadcrumb-item type="active" icon='{{ $module_icon }}'>{{ $module_title }}</x-backend-breadcrumb-item>
 </x-backend-breadcrumbs>
-@endsection
+@stop
 
 @section('content')
-<?php
-    //Total Donations
-    $total = 0;
-    foreach($$module_name_singular->donations as $donation){
-        $total += $donation->amount;
-    }
-?>
 <div class="card">
     <div class="card-body">
+        <h3>Data Siswa</h3>
+        <table class="table">
+            <tbody>
+                <td>ID Data</td>
+                    <th id="student_id">: {{ $student->id }}</th>
+                </tr>
+                <tr>
+                    <td>Nama</td>
+                    <th id="name">: {{ $student->name }}</th>
+                </tr>
+                <tr>
+                    <td>Student ID</td>
+                    <th id="student_id">: {{ $student->student_id }}</th>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
         <div class="row">
             <div class="col-8">
                 <h4 class="card-title mb-0">
-                    <i class="{{ $module_icon }}"></i> {{ $module_title }} <small class="text-muted">{{ __($module_action) }}</small>
+                    History Siswa
                 </h4>
                 <div class="small text-muted">
-                    @lang(":module_name Management Dashboard", ['module_name'=>Str::title($module_name)])
+                    @lang(":module_name Management Dashboard", ['module_name'=>Str::title($module_name_records)])
                 </div>
             </div>
             <!--/.col-->
             <div class="col-4">
                 <div class="float-right">
-                    <a href="{{ route("backend.$module_name.index") }}" class="btn btn-secondary mt-1 btn-sm" data-toggle="tooltip" title="{{ ucwords($module_name) }} List"><i class="fas fa-list"></i> List</a>
-                    @can('edit_'.$module_name)
-                    <a href="{{ route("backend.$module_name.edit", $$module_name_singular) }}" class="btn btn-primary mt-1 btn-sm" data-toggle="tooltip" title="Edit {{ Str::singular($module_name) }} "><i class="fas fa-wrench"></i> Edit</a>
+                    @can('add_'.$module_name_records)
+                        <x-buttons.create route='{{ route("backend.$module_name_records.createSrRecords",$student) }}' title="{{__('Create')}} {{ ucwords(Str::singular($module_name_records)) }}">Create</x-buttons.create>
                     @endcan
                 </div>
             </div>
@@ -43,74 +49,39 @@
         </div>
         <!--/.row-->
 
-
-        <!-- Tab panes -->
-
-        <div class="mt-4">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="donasi-tab" data-toggle="tab" href="#donasi" role="tab" aria-controls="donasi" aria-selected="true">Donasi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Detail</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="donasi" role="tabpanel" aria-labelledby="donasi-tab">
-                    <h4 class="text-primary text-center my-4">Riwayat Donasi</h4>
-                    
-                    <tr>
-                        <td>
-                            <strong>Total Donasi</strong>  
-                        </td>
-                        <td> 
-                            <h4>Rp. {{number_format($total, 2, ',', '.')}}</h4>                         
-                        </td>
-                    </tr>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tanggal</th>
-                                <th scope="col">Nominal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($$module_name_singular->donations as $donation)
-                                <tr>
-                                    <td>
-                                    {{$donation->donation_date}}    
-                                    </td>
-                                    <td> 
-                                        Rp. {{number_format($donation->amount, 2, ',', '.')}}                              
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table> 
-                </div>
-                <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
-                    <hr>
-                    @include('backend.includes.show')
-
-                    <hr>
-                        @include('school::backend.includes.activitylog')
-                    <hr>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table">
+                        {{ $dataTable->table() }}
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="card-footer">
         <div class="row">
             <div class="col">
                 <small class="float-right text-muted">
-                    Updated: {{$$module_name_singular->updated_at->diffForHumans()}},
-                    Created at: {{$$module_name_singular->created_at->isoFormat('LLLL')}}
+                    Updated: {{$student->updated_at->diffForHumans()}},
+                    Created at: {{$student->created_at->isoFormat('LLLL')}}
                 </small>
             </div>
         </div>
     </div>
 </div>
-
 @stop
+
+@push ('after-styles')
+<!-- DataTables School and Extensions -->
+<link rel="stylesheet" href="{{ asset('vendor/datatable/datatables.min.css') }}">
+
+@endpush
+
+@push ('after-scripts')
+<!-- DataTables School and Extensions -->
+{!! $dataTable->scripts()  !!}
+@endpush
+

@@ -2,6 +2,7 @@
 
 namespace Modules\Tracer\Services;
 
+use Modules\Core\Entities\Unit;
 use Modules\Tracer\Entities\Core;
 use Modules\Tracer\Entities\Record;
 use Modules\Recruiter\Entities\Booking;
@@ -35,10 +36,10 @@ use App\Models\Userprofile;
 class RecordService{
 
     public function __construct()
-        {        
+        {
         $this->module_title = Str::plural(class_basename(Record::class));
         $this->module_name = Str::lower($this->module_title);
-        
+
         }
 
     public function list(){
@@ -46,20 +47,20 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         $record =Record::query()->orderBy('id','desc')->get();
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
     }
-    
+
     public function getAllRecords(){
 
         $record =Record::query()->available()->orderBy('id','desc')->get();
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
@@ -77,9 +78,9 @@ class RecordService{
         }
 
         $record = $record->paginate($pagination);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
@@ -94,22 +95,22 @@ class RecordService{
         }
 
         $record = $record->paginate($pagination);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
     }
-    
+
     public function get_record($request){
 
         $id = $request["id"];
 
         $record =Record::findOrFail($id);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
@@ -120,24 +121,37 @@ class RecordService{
         $record =Record::query()->orderBy('order','asc')->get();
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
     }
 
-
     public function create(){
 
        Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? '0').')');
-        
+
         $createOptions = $this->prepareOptions();
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $createOptions,
         );
+    }
+
+    public function createSrByID($id){
+
+        Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? '0').')');
+
+         $createOptions = $this->prepareOptions();
+
+         return (object) array(
+             'error'=> false,
+             'message'=> '',
+             'data'=> $createOptions,
+             'student_id'=> $id
+         );
     }
 
     public function store(Request $request){
@@ -146,7 +160,7 @@ class RecordService{
         DB::beginTransaction();
 
         try {
-            
+
             $recordObject = new Record;
             $recordObject->fill($data);
 
@@ -158,14 +172,14 @@ class RecordService{
                 if ($record->getMedia($this->module_name)->first()) {
                     $record->getMedia($this->module_name)->first()->delete();
                 }
-    
+
                 $media = $record->addMedia($request->file('photo'))->toMediaCollection($this->module_name);
 
                 $record->photo = $media->getUrl();
 
                 $record->save();
             }
-            
+
         }catch (Exception $e){
             DB::rollBack();
             Log::critical(label_case($this->module_title.' ON LINE '.__LINE__.' AT '.Carbon::now().' | Function:'.__FUNCTION__).' | msg: '.$e->getMessage());
@@ -181,7 +195,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__function__)." | '".$record->name.'(ID:'.$record->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
@@ -192,7 +206,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> Record::findOrFail($id),
         );
@@ -205,7 +219,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__function__)." | '".$record->name.'(ID:'.$record->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $record,
         );
@@ -221,7 +235,7 @@ class RecordService{
 
             $record = new Record;
             $record->fill($data);
-            
+
             $updating = Record::findOrFail($id)->update($record->toArray());
 
             $updated_record = Record::findOrFail($id);
@@ -230,7 +244,7 @@ class RecordService{
                 if ($updated_record->getMedia($this->module_name)->first()) {
                     $updated_record->getMedia($this->module_name)->first()->delete();
                 }
-    
+
                 $media = $updated_record->addMedia($request->file('photo'))->toMediaCollection($this->module_name);
 
                 $updated_record->photo = $media->getUrl();
@@ -255,7 +269,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$updated_record->name.'(ID:'.$updated_record->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $updated_record,
         );
@@ -267,7 +281,7 @@ class RecordService{
 
         try{
             $records = Record::findOrFail($id);
-    
+
             $deleted = $records->delete();
         }catch (Exception $e){
             DB::rollBack();
@@ -284,7 +298,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$records->name.', ID:'.$records->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $records,
         );
@@ -295,7 +309,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' View'.__FUNCTION__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> Record::bookingonlyTrashed()->get(),
         );
@@ -323,7 +337,7 @@ class RecordService{
         Log::info(label_case(__FUNCTION__)." ".$this->module_title.": ".$records->name.", ID:".$records->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $records,
         );
@@ -334,7 +348,7 @@ class RecordService{
 
         try{
             $records = Record::bookingwithTrashed()->findOrFail($id);
-    
+
             $deleted = $records->forceDelete();
         }catch (Exception $e){
             DB::rollBack();
@@ -351,7 +365,7 @@ class RecordService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$records->name.', ID:'.$records->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $records,
         );
@@ -359,16 +373,16 @@ class RecordService{
 
     public function import(Request $request){
         $import = Excel::import(new RecordsImport($request), $request->file('data_file'));
-    
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $import,
         );
     }
 
     public static function prepareStatusFilter(){
-        
+
         $raw_status = Core::getRawData('recruitment_status');
         $status = [];
         foreach($raw_status as $key => $value){
@@ -379,10 +393,10 @@ class RecordService{
     }
 
     public static function prepareOptions(){
-        
-        $opt = ["1","2","3","4","5","6","7","8","9"];
+
+        $level = Unit::pluck('name','id');
         $options = array(
-            'opt'         => $opt,
+            'level'         => $level,
         );
 
         return $options;

@@ -83,10 +83,36 @@ class RecordsController extends Controller
         $module_action = 'Create';
 
         $options = $this->recordService->create()->data;
-        
+
         return view(
             "tracer::backend.$module_name.create",
             compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options')
+        );
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function createSrRecords($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Create';
+
+        $create = $this->recordService->createSrByID($id);
+        $options = $create->data;
+        $student_id =  $create->student_id;
+
+        return view(
+            "tracer::backend.$module_name.create",
+            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options','student_id')
         );
     }
 
@@ -182,7 +208,7 @@ class RecordsController extends Controller
         $$module_name_singular = $records->data;
 
         $options = $this->recordService->prepareOptions();
-        
+
         return view(
             "tracer::backend.$module_name.edit",
             compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options')
@@ -211,7 +237,7 @@ class RecordsController extends Controller
         $this->validate($request, [
             'photo'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
         $records = $this->recordService->update($request,$id);
 
         $$module_name_singular = $records->data;
@@ -343,7 +369,7 @@ class RecordsController extends Controller
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
-        
+
         return redirect("admin/$module_name");
     }
 
@@ -371,7 +397,7 @@ class RecordsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'Import';
-        
+
         $records = $this->recordService->import($request);
 
         $import = $records->data;
@@ -381,7 +407,7 @@ class RecordsController extends Controller
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
-        
+
         return redirect("admin/$module_name");
     }
 

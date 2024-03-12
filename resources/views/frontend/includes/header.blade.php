@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">IKA</a>
+    <a class="navbar-brand" href="/">{{setting('app_name')}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="oi oi-menu"></span> Menu
     </button>
@@ -12,7 +12,7 @@
             <img class="rounded-circle img-fluid float-left mx-2" src="{{asset(Auth::user()->avatar)}}" alt="Photo" height="30px" width="30px">
             <spans style="font-size:20px">
               Hi, {{Auth::user()->first_name}} !
-            </span> 
+            </span>
             <ul class="nav-item">
               @if(!Auth::user()->hasRole("user"))
                 <li class="nav-item active"><a class="nav-link" href="{{ route('backend.dashboard') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
@@ -40,7 +40,7 @@
                   <img class="rounded-circle img-fluid float-left mx-2" src="{{asset(Auth::user()->avatar)}}" alt="Photo" height="30px" width="30px">
                   <spans style="font-size:20px">
                     Hi, {{Str::limit(Auth::user()->first_name,12)}} !
-                  </span> 
+                  </span>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownProfile" style="left:auto;right:0;">

@@ -2,10 +2,10 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
-    <title>IKA &mdash; Warga</title>
+    <title>{{setting('app_name')}} &mdash; Warga</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     @include('frontend.includes.meta')
 
     <!-- Shortcut Icon -->
@@ -17,7 +17,7 @@
     @stack('before-styles')
 
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,500|Dosis:400,700" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="/css/multitekol-bg.css">
     <link rel="stylesheet" href="/css/ionicons.min.css">
     <link rel="stylesheet" href="/css/icomoon.css">
@@ -49,13 +49,13 @@
 
 <!-- Scripts -->
 @stack('before-scripts')
-    <script src="{{ mix('js/frontend.js') }}"></script>        
+    <script src="{{ mix('js/frontend.js') }}"></script>
 
     <script src="/js/main.js"></script>
 
     <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="/js/jquery.validate.js"></script>
-    
+
     <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/>
 
 @stack('after-scripts')

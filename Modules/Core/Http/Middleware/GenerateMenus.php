@@ -24,14 +24,14 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-item',
             ])
             ->data([
-                'order' => 2,
+                'order' => 5,
                 'activematches' => ['admin/units*'],
                 'permission' => ['view_units'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-            
+
         })->sortBy('order');
 
         return $next($request);

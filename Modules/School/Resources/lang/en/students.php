@@ -13,8 +13,11 @@ return [
     'height'                    => 'Height',
     'weight'                    => 'Weight',
     'religion'                  => 'Religion',
-    'photo'                     => 'Photo',    
+    'photo'                     => 'Photo',
     'available'                 => 'Available',
     'skills'                    => 'Skills',
-    'certificate'               => 'certificate',   
+    'certificate'               => 'certificate',
+    'nik'                       => 'NIK',
+    'email'                     => 'Email',
+    'phone'                     => 'Phone'
 ];

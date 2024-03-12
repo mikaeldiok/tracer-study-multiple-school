@@ -26,17 +26,8 @@ class Record extends BaseModel
     protected static $logOnlyDirty = true;
     protected static $logAttributes = ['name', 'id'];
 
-    protected static function newFactory()
-    {
-        return \Modules\Core\Database\factories\UnitFactory::new();
-    }
-
-    public function scopeAvailable($query){
-        return $query->where('available','1');
-    }
-
-    public function isAvailable(){
-        return $this->available;
+    public function unit(){
+        return $this->belongsTo('Modules\School\Entities\Student');
     }
 }
 

@@ -2,6 +2,7 @@
 
 namespace Modules\School\Services;
 
+use Illuminate\Support\Facades\Hash;
 use Modules\School\Entities\Core;
 use Modules\School\Entities\Student;
 use Modules\Recruiter\Entities\Booking;
@@ -38,10 +39,10 @@ class StudentService{
     public $module_title;
 
     public function __construct()
-        {        
+        {
         $this->module_title = Str::plural(class_basename(Student::class));
         $this->module_name = Str::lower($this->module_title);
-        
+
         }
 
     public function list(){
@@ -49,20 +50,20 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         $student =Student::query()->orderBy('id','desc')->get();
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
     }
-    
+
     public function getAllStudents(){
 
         $student =Student::query()->available()->orderBy('id','desc')->get();
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -76,9 +77,9 @@ class StudentService{
                     ->groupBy('bookings.student_id')
                     ->orderBy('total','desc')
                     ->get();
-                
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -133,9 +134,9 @@ class StudentService{
         }
 
         $student = $student->paginate($pagination);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -150,33 +151,43 @@ class StudentService{
         }
 
         $student = $student->paginate($pagination);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
     }
-    
+
     public function get_student($request){
 
         $id = $request["id"];
 
         $student =Student::findOrFail($id);
-        
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
     }
 
+    public function getStudentById($id){
+
+        $student =Student::findOrFail($id);
+
+        return (object) array(
+            'error'=> false,
+            'message'=> '',
+            'data'=> $student,
+        );
+    }
     public function getList(){
 
         $student =Student::query()->orderBy('order','asc')->get();
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -186,11 +197,11 @@ class StudentService{
     public function create(){
 
        Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? '0').')');
-        
+
         $createOptions = $this->prepareOptions();
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $createOptions,
         );
@@ -202,20 +213,24 @@ class StudentService{
         DB::beginTransaction();
 
         try {
-            
+
+            $user = $this->createNormalUser($request);
+            $user->assignRole('student');
+
             $studentObject = new Student;
             $studentObject->fill($data);
+            $studentObject->user_id = $user->id;
 
             if($studentObject->birth_date){
-                $studentObject->birth_date = Carbon::createFromFormat('d/m/Y', $studentObject->birth_date)->format('Y-m-d'); 
+                $studentObject->birth_date = Carbon::createFromFormat('d/m/Y', $studentObject->birth_date)->format('Y-m-d');
             }
 
             if($studentObject->skills){
-                $studentObject->skills = implode(',', $studentObject->skills); 
+                $studentObject->skills = implode(',', $studentObject->skills);
             }
 
             if($studentObject->certificate){
-                $studentObject->certificate = implode(',', $studentObject->certificate); 
+                $studentObject->certificate = implode(',', $studentObject->certificate);
             }
 
             $studentObjectArray = $studentObject->toArray();
@@ -226,14 +241,14 @@ class StudentService{
                 if ($student->getMedia($this->module_name)->first()) {
                     $student->getMedia($this->module_name)->first()->delete();
                 }
-    
+
                 $media = $student->addMedia($request->file('photo'))->toMediaCollection($this->module_name);
 
                 $student->photo = $media->getUrl();
 
                 $student->save();
             }
-            
+
         }catch (Exception $e){
             DB::rollBack();
             Log::critical(label_case($this->module_title.' ON LINE '.__LINE__.' AT '.Carbon::now().' | Function:'.__FUNCTION__).' | msg: '.$e->getMessage());
@@ -249,7 +264,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__function__)." | '".$student->name.'(ID:'.$student->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -260,7 +275,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> Student::findOrFail($id),
         );
@@ -271,17 +286,17 @@ class StudentService{
         $student = Student::findOrFail($id);
 
         if($student->skills){
-            $student->skills = explode(',', $student->skills); 
+            $student->skills = explode(',', $student->skills);
         }
 
         if($student->certificate){
-            $student->certificate = explode(',', $student->certificate); 
+            $student->certificate = explode(',', $student->certificate);
         }
-        
+
         Log::info(label_case($this->module_title.' '.__function__)." | '".$student->name.'(ID:'.$student->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $student,
         );
@@ -297,19 +312,19 @@ class StudentService{
 
             $student = new Student;
             $student->fill($data);
-            
+
             if($student->birth_date){
-                $student->birth_date = Carbon::createFromFormat('d/m/Y', $student->birth_date)->format('Y-m-d'); 
+                $student->birth_date = Carbon::createFromFormat('d/m/Y', $student->birth_date)->format('Y-m-d');
             }
 
             if($student->skills){
-                $student->skills = implode(',', $student->skills); 
+                $student->skills = implode(',', $student->skills);
             }
 
             if($student->certificate){
-                $student->certificate = implode(',', $student->certificate); 
+                $student->certificate = implode(',', $student->certificate);
             }
-            
+
             $updating = Student::findOrFail($id)->update($student->toArray());
 
             $updated_student = Student::findOrFail($id);
@@ -318,7 +333,7 @@ class StudentService{
                 if ($updated_student->getMedia($this->module_name)->first()) {
                     $updated_student->getMedia($this->module_name)->first()->delete();
                 }
-    
+
                 $media = $updated_student->addMedia($request->file('photo'))->toMediaCollection($this->module_name);
 
                 $updated_student->photo = $media->getUrl();
@@ -343,7 +358,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$updated_student->name.'(ID:'.$updated_student->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $updated_student,
         );
@@ -355,7 +370,7 @@ class StudentService{
 
         try{
             $students = Student::findOrFail($id);
-    
+
             $deleted = $students->delete();
         }catch (Exception $e){
             DB::rollBack();
@@ -372,7 +387,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$students->name.', ID:'.$students->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $students,
         );
@@ -383,7 +398,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' View'.__FUNCTION__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> Student::bookingonlyTrashed()->get(),
         );
@@ -411,7 +426,7 @@ class StudentService{
         Log::info(label_case(__FUNCTION__)." ".$this->module_title.": ".$students->name.", ID:".$students->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $students,
         );
@@ -422,7 +437,7 @@ class StudentService{
 
         try{
             $students = Student::bookingwithTrashed()->findOrFail($id);
-    
+
             $deleted = $students->forceDelete();
         }catch (Exception $e){
             DB::rollBack();
@@ -439,7 +454,7 @@ class StudentService{
         Log::info(label_case($this->module_title.' '.__FUNCTION__)." | '".$students->name.', ID:'.$students->id." ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $students,
         );
@@ -447,16 +462,16 @@ class StudentService{
 
     public function import(Request $request){
         $import = Excel::import(new StudentsImport($request), $request->file('data_file'));
-    
+
         return (object) array(
-            'error'=> false,            
+            'error'=> false,
             'message'=> '',
             'data'=> $import,
         );
     }
 
     public static function prepareStatusFilter(){
-        
+
         $raw_status = Core::getRawData('recruitment_status');
         $status = [];
         foreach($raw_status as $key => $value){
@@ -467,7 +482,7 @@ class StudentService{
     }
 
     public static function prepareOptions(){
-        
+
         $raw_majors = Core::getRawData('major');
         $majors = [];
         foreach($raw_majors as $key => $value){
@@ -496,7 +511,7 @@ class StudentService{
     }
 
     public static function prepareFilter(){
-        
+
         $options = self::prepareOptions();
 
         $year_class_raw = DB::table('students')
@@ -605,13 +620,13 @@ class StudentService{
                                 ->orderBy('year_class','asc')
                                 ->limit(8)
                                 ->get();
-        
+
         $year_class_list= [];
 
 
         foreach($year_class_list_raw as $item){
             $year_class_list += [$item->year_class => 0];
-        }                    
+        }
 
         foreach($majors as $major){
 
@@ -678,7 +693,7 @@ class StudentService{
         $chart->labels($keys);
 
         $chart->dataset("Jumlah Siswa", 'bar',$values);
-        
+
         $chart->options([
             "xAxis" => [
                 "axisLabel" => [
@@ -706,7 +721,7 @@ class StudentService{
         }
 
         $countDoneStudents = Booking::where('status',end($status))->get()->count();
-        
+
         $stats = (object) array(
             'status'                    => $status,
             'countAllStudents'          => $countAllStudents,
@@ -716,4 +731,79 @@ class StudentService{
         return $stats;
     }
 
+    public function createNormalUser($request){
+
+        DB::beginTransaction();
+
+        try{
+            if(!$request->is_register){
+                $request->confirmed = 1;
+            }
+            $data_array = $request->except('_token', 'roles', 'permissions', 'password_confirmation');
+            $stringName = explode(" ",$data_array['name']);
+            $data_array['first_name'] = $stringName[0];
+            $data_array['last_name'] = end($stringName);
+            $data_array['password'] = Hash::make($request->password);
+
+            if ($request->confirmed == 1) {
+                $data_array = Arr::add($data_array, 'email_verified_at', Carbon::now());
+            } else {
+                $data_array = Arr::add($data_array, 'email_verified_at', null);
+            }
+
+            $user = User::create($data_array);
+
+            // Username
+            $id = $user->id;
+            $username = config('app.initial_username') + $id;
+            $user->username = $username;
+            $user->save();
+
+            \Log::debug($user);
+            if(!$request->is_register){
+                event(new UserCreated($user));
+            }
+
+        }catch (Exception $e){
+            DB::rollBack();
+            Log::critical(label_case($this->module_title.' AT '.Carbon::now().' | Function:'.__FUNCTION__).' | msg: '.$e->getMessage());
+            return null;
+        }
+
+        DB::commit();
+
+        return $user;
+    }
+
+    public function updateNormalUser($request){
+
+        DB::beginTransaction();
+
+        try{
+            $data_array = $request->except('_token', 'roles', 'permissions', 'password_confirmation');
+            $user = User::where('email', $data_array['email'])->first();
+            if(!$user){
+                $user = $this->createNormalUser($request);
+                $user->assignRole('student');
+                DB::commit();
+                return $user;
+            }
+
+            $user->email = $data_array['email'];
+            if($request->password){
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+        }catch (Exception $e){
+            DB::rollBack();
+            Log::critical(label_case('updateNormalUser AT '.Carbon::now().' | Function:'.__FUNCTION__).' | msg: '.$e->getMessage());
+            return null;
+        }
+
+        DB::commit();
+
+        return $user;
+    }
 }

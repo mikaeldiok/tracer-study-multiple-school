@@ -39,21 +39,28 @@ class AuthenticatedSessionController extends Controller
         if (Auth::check()) {
             if (env('EMAIL_MUST_VERIFY') == 'true'){
                 if(!Auth::user()->email_verified_at && !Auth::user()->can('view_backend')){
-                    
+
                     Auth::logout();
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();
 
                     Flash::error("<i class='fas fa-times-circle'></i> Silakan konfirmasi email anda terlebih dahulu. Kami telah mengirimkan konfirmasi ke alamat email anda.")->important();
-                    
+
                     return redirect('/login');
                 }
             }
 
-            $canViewBackend = Auth::user()->can('view_backend'); 
+            $canViewBackend = Auth::user()->can('view_backend');
+            $isStudent = Auth::user()->can('student_area');
 
             if($canViewBackend){
                 $redirectTo = '/admin';
+            }
+
+            if($isStudent && !Auth::user()->isSuperAdmin()){
+                \Log::debug(Auth::user()->student);
+                $student_id = Auth::user()->student->id;
+                $redirectTo = 'students/'.$student_id;
             }
         }
 

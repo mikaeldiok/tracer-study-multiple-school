@@ -69,6 +69,10 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasOne('App\Models\Userprofile');
     }
 
+    public function student()
+    {
+        return $this->hasOne('Modules\School\Entities\Student', 'user_id');
+    }
 
     /**
      * Get the list of users related to the current User.

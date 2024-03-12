@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDataToStudentsTable extends Migration
+class AddUserIdToStudent extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,7 @@ class AddDataToStudentsTable extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->integer('year_graduate')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->bigInteger('user_id')->nullable();
         });
     }
 
@@ -29,10 +26,8 @@ class AddDataToStudentsTable extends Migration
     public function down()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('year_graduate');
-            $table->dropColumn('email');
-            $table->dropColumn('phone');
-            $table->dropColumn('address');
+            $table->dropColumn('user_id');
+
         });
     }
 }

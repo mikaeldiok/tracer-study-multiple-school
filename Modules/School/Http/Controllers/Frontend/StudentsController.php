@@ -10,13 +10,16 @@ use Illuminate\Support\Str;
 use Log;
 use Auth;
 use Modules\School\Services\StudentService;
+use Modules\Tracer\DataTables\StudentRecordsDataTable;
+use Modules\Tracer\Services\RecordService;
 use Spatie\Activitylog\Models\Activity;
 
 class StudentsController extends Controller
 {
     protected $studentService;
+    protected $recordService;
 
-    public function __construct(StudentService $studentService)
+    public function __construct(StudentService $studentService, RecordService $recordService)
     {
         // Page Title
         $this->module_title = trans('menu.school.students');
@@ -34,6 +37,7 @@ class StudentsController extends Controller
         $this->module_model = "Modules\Student\Entities\Student";
 
         $this->studentService = $studentService;
+        $this->recordService = $recordService;
     }
 
     /**
@@ -60,7 +64,7 @@ class StudentsController extends Controller
         //determine connections
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
-       
+
         return view(
             "school::frontend.$module_name.index",
             compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "students",'driver')
@@ -88,15 +92,15 @@ class StudentsController extends Controller
         $module_action = 'Index';
 
         $students = $this->studentService->getPaginatedStudents(20,$request)->data;
-        
+
         if ($request->ajax()) {
-            return view("school::frontend.$module_name.students-card-loader", ['students' => $students])->render();  
+            return view("school::frontend.$module_name.students-card-loader", ['students' => $students])->render();
         }
-        
+
         //determine connections
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
-       
+
         return view(
             "school::frontend.$module_name.index",
             compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "students",'driver')
@@ -123,11 +127,11 @@ class StudentsController extends Controller
         $module_action = 'Index';
 
         $students = $this->studentService->filterStudents(20,$request)->data;
-        
+
         if ($request->ajax()) {
-            return view("school::frontend.$module_name.students-card-loader", ['students' => $students])->render();  
+            return view("school::frontend.$module_name.students-card-loader", ['students' => $students])->render();
         }
-        
+
     }
 
 
@@ -139,27 +143,32 @@ class StudentsController extends Controller
      *
      * @return Response
      */
-    public function show($id,$studentId)
+    public function show($id)
     {
+        if(Auth::user()->can('student_area') && !Auth::user()->isSuperAdmin()){
+            $student_id = Auth::user()->student->id;
+
+            if($id != $student_id){
+                return abort(404);
+            }
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
+        $module_name_records = "records";
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Index';
+        $module_action = 'List';
 
-        $student = $this->studentService->show($id)->data;
-        
-        
-        //determine connections
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
-       
-        return view(
-            "school::frontend.$module_name.show",
-            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "student",'driver')
+
+        $dataTable = new StudentRecordsDataTable($this->recordService,$id);
+        $student = $this->studentService->getStudentById($id)->data;
+
+
+        return $dataTable->render("school::frontend.$module_path.show",
+            compact('module_title', 'module_name', 'module_name_records', 'module_icon','student', 'module_action')
         );
     }
 }

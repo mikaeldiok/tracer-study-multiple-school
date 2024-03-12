@@ -1,17 +1,18 @@
 <?php
 
-namespace Modules\Core\DataTables;
+namespace Modules\Tracer\DataTables;
 
 use Carbon\Carbon;
 use Illuminate\Support\HtmlString;
-use Modules\Core\Repositories\UnitRepository;
+use Modules\Tracer\Services\RecordService;
+use Modules\Tracer\Entities\Record;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UnitsDataTable extends DataTable
+class StudentRecordsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,11 +20,12 @@ class UnitsDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function __construct(UnitRepository $unitRepository)
+    public function __construct(RecordService $recordService, $id)
     {
-        $this->module_name = 'units';
+        $this->module_name = 'records';
 
-        $this->unitRepository = $unitRepository;
+        $this->recordService = $recordService;
+        $this->id = $id;
     }
 
     public function dataTable($query)
@@ -33,7 +35,7 @@ class UnitsDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
 
-                return view('backend.includes.action_column_admin', compact('module_name', 'data'));
+                return view('backend.includes.action_column', compact('module_name', 'data'));
             })
             ->editColumn('updated_at', function ($data) {
                 $module_name = $this->module_name;
@@ -53,24 +55,18 @@ class UnitsDataTable extends DataTable
 
                 return $formated_date;
             })
-            ->rawColumns(['name', 'action']);
+            ->rawColumns(['name', 'action','photo','available']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Unit $model
+     * @param \App\Record $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query()
     {
-        $user = auth()->user();
-        $data = $this->unitRepository->query();
-
-        if(!$user->isSuperAdmin() && !$user->hasAllUnitAccess()){
-            $unit_id = $user->unit_id;
-            $data =  $this->unitRepository->getUnitsByUnitQuery($data, $unit_id);
-        }
+        $data = Record::where('student_id',$this->id);
 
         return $this->applyScopes($data);
     }
@@ -82,11 +78,13 @@ class UnitsDataTable extends DataTable
      */
     public function html()
     {
+        $created_at = 2;
         return $this->builder()
-                ->setTableId('units-table')
+                ->setTableId('records-table')
                 ->columns($this->getColumns())
                 ->minifiedAjax()
                 ->dom(config('mk-datatables.mk-dom'))
+                ->orderBy($created_at,'desc')
                 ->buttons(
                     Button::make('export'),
                     Button::make('print'),
@@ -114,8 +112,10 @@ class UnitsDataTable extends DataTable
                   ->exportable(false)
                   ->printable(false)
                   ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('level'),
+            Column::make('id')->hidden(),
+            Column::make('name')->title(__("tracer::records.name")),
+            Column::make('created_at'),
+            Column::make('updated_at')->hidden(),
         ];
     }
 
@@ -126,6 +126,6 @@ class UnitsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Units_' . date('YmdHis');
+        return 'Records_' . date('YmdHis');
     }
 }

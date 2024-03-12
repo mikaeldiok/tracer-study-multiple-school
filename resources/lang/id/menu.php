@@ -14,7 +14,7 @@ return [
         'title'             => 'Data Inti',
         'paths'             => 'Jalur Pendaftaran',
         'periods'           => 'Periode',
-        'units'             => 'Unit',
+        'units'             => 'Tingkatan',
         'tiers'             => 'Kelas / Jurusan',
     ],
 
@@ -24,6 +24,10 @@ return [
         'cores'             => 'Data Sekolah',
     ],
 
+    'tracer' => [
+        'title'             => 'Tracer',
+        'records'           => 'Records',
+    ],
 
     'blog' => [
         'title'             => 'Blog',

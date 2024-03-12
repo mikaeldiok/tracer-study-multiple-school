@@ -14,7 +14,7 @@ return [
         'title'             => 'Core Data',
         'paths'             => 'Paths',
         'periods'           => 'Periods',
-        'units'             => 'Units',
+        'units'             => 'Tingkatan',
         'tiers'             => 'Tiers',
     ],
 
@@ -22,7 +22,11 @@ return [
         'title'             => 'School',
         'students'          => 'Students',
     ],
-    
+
+    'tracer' => [
+        'title'             => 'Tracer',
+        'records'           => 'Records',
+    ],
 
     'blog' => [
         'title'             => 'Blog',

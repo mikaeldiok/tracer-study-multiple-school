@@ -17,19 +17,15 @@ class Unit extends BaseModel
     protected static $logName = 'units';
     protected static $logOnlyDirty = true;
     protected static $logAttributes = ['name', 'id'];
-    
+
     public function registrants()
     {
         return $this->hasMany('Modules\Registrant\Entities\Registrant');
     }
 
-    public function tier()
+    public function records()
     {
-        return $this->hasMany('Modules\Core\Entities\Unit');
+        return $this->hasMany('Modules\School\Entities\Student');
     }
 
-    protected static function newFactory()
-    {
-        return \Modules\Core\Database\factories\UnitFactory::new();
-    }
 }

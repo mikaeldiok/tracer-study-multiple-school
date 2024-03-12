@@ -27,10 +27,12 @@ class PermissionRoleTableSeeder extends Seeder
         $manager = Role::firstOrCreate(['name' => 'manager']);
         $executive = Role::firstOrCreate(['name' => 'executive']);
         $user = Role::firstOrCreate(['name' => 'user']);
+        $student = Role::firstOrCreate(['name' => 'student']);
 
         // Create Permissions
         Permission::firstOrCreate(['name' => 'view_backend']);
         Permission::firstOrCreate(['name' => 'edit_settings']);
+        Permission::firstOrCreate(['name' => 'student_area']);
         Permission::firstOrCreate(['name' => 'view_logs']);
 
         $permissions = Permission::defaultPermissions();
@@ -69,6 +71,15 @@ class PermissionRoleTableSeeder extends Seeder
         ]);
         echo "\n _Mkdums_ Permissions Created.";
 
+        \Artisan::call('auth:permission', [
+            'name' => 'students',
+        ]);
+        echo "\n _Students Permissions Created.";
+
+        \Artisan::call('auth:permission', [
+            'name' => 'records',
+        ]);
+        echo "\n _Records_ Permissions Created.";
 
         echo "\n\n";
 
@@ -76,6 +87,10 @@ class PermissionRoleTableSeeder extends Seeder
         $admin->givePermissionTo(Permission::all());
         $manager->givePermissionTo('view_backend');
         $executive->givePermissionTo('view_backend');
+
+        $student->givePermissionTo('student_area');
+        $student->givePermissionTo('view_students');
+        $student->givePermissionTo('edit_students');
 
         Schema::enableForeignKeyConstraints();
     }

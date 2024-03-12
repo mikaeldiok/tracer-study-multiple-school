@@ -15,8 +15,8 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->string('level_id')->nullable()->default(NULL);
-            $table->string('name')->nullable()->default(NULL);
+            $table->string('unit_id');
+            $table->string('name');
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

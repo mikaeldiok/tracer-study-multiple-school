@@ -32,10 +32,11 @@ Route::group(['namespace' => '\Modules\Tracer\Http\Controllers\Frontend', 'as' =
      * ---------------------------------------------------------------------
      */
     $module_name = 'records';
-    $controller_name = 'RecordsController';        
+    $controller_name = 'RecordsController';
     Route::get("$module_name/catalog", ['as' => "$module_name.index", 'uses' => "$controller_name@indexPaginated"]);
     Route::get("$module_name/catalog/filter", ['as' => "$module_name.filterRecords", 'uses' => "$controller_name@filterRecords"]);
     Route::get("$module_name/{id}-{recordId}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
+    Route::get("$module_name/create-sr/{id}", ['as' => "$module_name.createSrRecords", 'uses' => "$controller_name@createSrRecords"]);
 });
 
 /*
@@ -69,6 +70,7 @@ Route::group(['namespace' => '\Modules\Tracer\Http\Controllers\Backend', 'as' =>
     Route::delete("$module_name/purge/{id}", ['as' => "$module_name.purge", 'uses' => "$controller_name@purge"]);
     Route::post("$module_name/get_record", ['as' => "$module_name.getrecord", 'uses' => "$controller_name@get_record"]);
     Route::post("$module_name/import", ['as' => "$module_name.import", 'uses' => "$controller_name@import"]);
+    Route::get("$module_name/create-sr/{id}", ['as' => "$module_name.createSrRecords", 'uses' => "$controller_name@createSrRecords"]);
     Route::resource("$module_name", "$controller_name");
 
 

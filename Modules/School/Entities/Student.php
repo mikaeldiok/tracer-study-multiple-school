@@ -32,7 +32,7 @@ class Student extends UserModel implements HasMedia
     protected static $logName = 'students';
     protected static $logOnlyDirty = true;
     protected static $logAttributes = ['name', 'id'];
-    
+
     protected static function newFactory()
     {
         return StudentFactory::new();
@@ -48,7 +48,7 @@ class Student extends UserModel implements HasMedia
     protected $hidden = [
      'password', 'remember_token',
     ];
-    
+
     protected static function boot()
     {
         parent::boot();
@@ -75,7 +75,7 @@ class Student extends UserModel implements HasMedia
             $table->save();
         });
     }
-    
+
     /**
      * Create Converted copies of uploaded images.
      */
@@ -103,43 +103,32 @@ class Student extends UserModel implements HasMedia
         //determine connections
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
-        
+
         switch($driver){
             case 'mysql':
                     $table_info_columns = DB::select(DB::raw('SHOW COLUMNS FROM '.$this->getTable()));
                 break;
-            case 'pgsql':       
+            case 'pgsql':
                     $table_info_columns = DB::select(DB::raw(
                         "SELECT data_type as Type, column_name as Field
                             FROM information_schema.columns
-                        Where table_schema = 'public'    
+                        Where table_schema = 'public'
                         AND table_name   = '".$this->getTable()."'"
                     ));
                 break;
-        }   
+        }
 
         return $table_info_columns;
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function bookings()
+    public function user()
     {
-        return $this->hasMany('Modules\Recruiter\Entities\Booking');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    public function checkBookedBy($corporationId)
-    {
-        $checkBooking = Booking::where('student_id',$this->id)
-                                ->where('corporation_id',$corporationId)
-                                ->first();
-        if($checkBooking){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     public function scopeAvailable($query){
         return $query->where('available','1');

@@ -36,25 +36,6 @@ class RecordsDataTable extends DataTable
 
                 return view('backend.includes.action_column', compact('module_name', 'data'));
             })
-            ->editColumn('available', function ($data) {
-                $module_name = $this->module_name;
-
-                if($data->available)
-                {
-                    $availability = '<p class="text-white text-center bg-success rounded">YES</p>';
-                }else{
-                    $availability = '<p class="text-white text-center bg-danger rounded">NO</p>';
-                }
-
-                return $availability;
-            })
-            ->editColumn('photo', function ($data) {
-                $module_name = $this->module_name;
-
-                $pictureView = '<img src="'.asset($data->photo).'" class="user-profile-image img-fluid img-thumbnail" style="max-height:150px; max-width:100px;" />';
-
-                return $pictureView;
-            })
             ->editColumn('updated_at', function ($data) {
                 $module_name = $this->module_name;
 
@@ -132,10 +113,7 @@ class RecordsDataTable extends DataTable
                   ->printable(false)
                   ->addClass('text-center'),
             Column::make('id')->hidden(),
-            Column::make('photo')->title(__("tracer::records.photo")),
             Column::make('name')->title(__("tracer::records.name")),
-            Column::make('record_id')->title(__("tracer::records.record_id")),
-            Column::make('available')->title(__("tracer::records.available")),
             Column::make('created_at'),
             Column::make('updated_at')->hidden(),
         ];

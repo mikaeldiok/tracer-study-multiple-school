@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   color: #000;
   font-weight: 300;
-  font-family: "Dosis", sans-serif; }
+  font-family: "Roboto ", sans-serif; }
 
 .text-primary {
   color: #8b187e !important; }
@@ -633,20 +633,20 @@ textarea.form-control {
 
 .bg-mild-purple {
   background: #652f8c !important; }
-  
+
 .bg-bright-yellow {
   background: #fdd33d !important; }
- 
+
 .bg-sunset {
   background: linear-gradient(to right, rgba(250, 112, 154, 1), rgba(254, 225, 64, 1))
 }
-  
+
 .text-bright-yellow {
   color: #fdd33d !important; }
 
 .text-solid-yellow {
   color: #ffd000 !important; }
-  
+
 .site-section {
   padding: 4em 0; }
 
@@ -1612,7 +1612,7 @@ textarea.form-control {
     font-size: 40px;
     line-height: 1.1;
     margin-bottom: 50px;
-    font-family: "Dosis", sans-serif; }
+    font-family: "Roboto ", sans-serif; }
     @media (min-width: 768px) {
       .block-30 .heading {
         font-size: 80px; } }
@@ -2100,7 +2100,7 @@ html:not([dir="rtl"]) .c-avatar-status {
 .btn.btn-orange.btn-outline-orange {
   border: 2px solid #e58500;
   background: transparent;
-  color: #e58500; 
+  color: #e58500;
 }
 
 .btn-black{
@@ -2110,7 +2110,7 @@ html:not([dir="rtl"]) .c-avatar-status {
 .btn.btn-black.btn-outline-black {
   border: 2px solid #000000;
   background: transparent;
-  color: #000000; 
+  color: #000000;
 }
 
 .btn.btn-orange.btn-outline-orange:hover {

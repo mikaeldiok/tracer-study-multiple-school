@@ -18,7 +18,7 @@
 * --------------------------------------------------------------------
 */
 // Route::group(['namespace' => '\Modules\School\Http\Controllers\Auth', 'as' => 'auth.', 'middleware' => 'web', 'prefix' => ''], function () {
-    
+
 //     /*
 //      *
 //      *  Schools Routes
@@ -26,14 +26,14 @@
 //      * ---------------------------------------------------------------------
 //      */
 //     $module_name = 'students';
-//     $controller_name = 'StudentsController'; 
-    
+//     $controller_name = 'StudentsController';
+
 //     Route::get("$module_name/login", ['as' => "$module_name.login", 'uses' => "$controller_name@showLoginForm"]);
 //     Route::post("$module_name/login", ['as' => "$module_name.login", 'uses' => "$controller_name@login"]);
 //     Route::get("$module_name/register", ['as' => "$module_name.register", 'uses' => "$controller_name@showRegisterForm"]);
 //     Route::post("$module_name/register", ['as' => "$module_name.register", 'uses' => "$controller_name@register"]);
 //     Route::get("$module_name/logout", ['as' => "$module_name.logout", 'uses' => "$controller_name@logout"]);
-    
+
 // });
 
 /*
@@ -51,10 +51,10 @@ Route::group(['namespace' => '\Modules\School\Http\Controllers\Frontend', 'as' =
      * ---------------------------------------------------------------------
      */
     $module_name = 'students';
-    $controller_name = 'StudentsController';        
+    $controller_name = 'StudentsController';
     Route::get("$module_name/catalog", ['as' => "$module_name.index", 'uses' => "$controller_name@indexPaginated"]);
     Route::get("$module_name/catalog/filter", ['as' => "$module_name.filterStudents", 'uses' => "$controller_name@filterStudents"]);
-    Route::get("$module_name/{id}-{studentId}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
+    Route::get("$module_name/{id}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
 });
 
 /*

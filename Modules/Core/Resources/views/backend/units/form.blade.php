@@ -9,6 +9,7 @@
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+            <small>nama tingkat adalah nama yang digunakan untuk sebuah jenjang di pendidikan / pekerjaan</small>
         </div>
     </div>
 </div>
@@ -16,7 +17,7 @@
     <div class="col-6">
         <div class="form-group">
             <?php
-            $field_name = 'contact_number';
+            $field_name = 'level';
             $field_lable = __("core::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "required";
@@ -26,21 +27,6 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'contact_email';
-            $field_lable = __("core::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->email($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
-        </div>
-    </div>
-</div>
-
 
 <!-- Select2 Library -->
 <x-library.select2 />

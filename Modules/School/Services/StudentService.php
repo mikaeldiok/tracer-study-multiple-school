@@ -198,7 +198,7 @@ class StudentService{
 
        Log::info(label_case($this->module_title.' '.__function__).' | User:'.(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? '0').')');
 
-        $createOptions = $this->prepareOptions();
+        $createOptions = [];
 
         return (object) array(
             'error'=> false,
@@ -284,14 +284,6 @@ class StudentService{
     public function edit($id){
 
         $student = Student::findOrFail($id);
-
-        if($student->skills){
-            $student->skills = explode(',', $student->skills);
-        }
-
-        if($student->certificate){
-            $student->certificate = explode(',', $student->certificate);
-        }
 
         Log::info(label_case($this->module_title.' '.__function__)." | '".$student->name.'(ID:'.$student->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 

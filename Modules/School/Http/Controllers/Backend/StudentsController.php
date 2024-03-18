@@ -200,7 +200,7 @@ class StudentsController extends Controller
 
         $$module_name_singular = $students->data;
 
-        $options = $this->studentService->prepareOptions();
+        $options = [];
 
         return view(
             "school::backend.$module_name.edit",

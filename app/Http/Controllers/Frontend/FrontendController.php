@@ -26,11 +26,11 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function about()
+    public function registration()
     {
         $body_class = '';
 
-        return view("frontend.about",
+        return view("school::frontend.students.create",
             compact('body_class')
         );
 

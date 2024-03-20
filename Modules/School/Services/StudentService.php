@@ -215,23 +215,24 @@ class StudentService{
         try {
 
             $user = $this->createNormalUser($request);
+            if(!$user){
+                DB::rollBack();
+                Log::critical(label_case($this->module_title.' ON LINE '.__LINE__.' AT '.Carbon::now().' | Function:'.__FUNCTION__).' | msg: Data email sudah ada');
+                return (object) array(
+                    'error'=> true,
+                    'message'=> "Pengguna sudah ada di dalam sistem",
+                    'data'=> null,
+                );
+            }
             $user->assignRole('student');
 
+            if(!$request->input('student_id')){
+                $data['student_id'] = 0;
+            }
             $studentObject = new Student;
             $studentObject->fill($data);
             $studentObject->user_id = $user->id;
 
-            if($studentObject->birth_date){
-                $studentObject->birth_date = Carbon::createFromFormat('d/m/Y', $studentObject->birth_date)->format('Y-m-d');
-            }
-
-            if($studentObject->skills){
-                $studentObject->skills = implode(',', $studentObject->skills);
-            }
-
-            if($studentObject->certificate){
-                $studentObject->certificate = implode(',', $studentObject->certificate);
-            }
 
             $studentObjectArray = $studentObject->toArray();
 

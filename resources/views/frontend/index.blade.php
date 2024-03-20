@@ -25,17 +25,17 @@
       <div class="row">
         <div class="col-md-6 pr-5">
           <div class="block-48">
-              <span class="block-48-text-1">Served Over</span>
-              <div class="block-48-counter ftco-number" data-number="1321901">0</div>
-              <span class="block-48-text-1 mb-4 d-block">Children in 150 Countries</span>
-              <p class="mb-0"><a href="#" class="btn btn-white px-3 py-2">View Our Program</a></p>
+              <span class="block-48-text-1">Data alumni</span>
+              <div class="block-48-counter ftco-number" data-number="10000">0</div>
+              <span class="block-48-text-1 mb-4 d-block">Alumni Warga School</span>
+              <p class="mb-0"><a href="#" class="btn btn-white px-3 py-2">Cek data alumni</a></p>
             </div>
         </div>
         <div class="col-md-6 welcome-text">
-          <h2 class="display-4 mb-3">Who Are We?</h2>
-          <p class="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. </p>
-          <p class="mb-0"><a href="#" class="btn btn-primary px-3 py-2">Learn More</a></p>
+          <h2 class="display-4 mb-3">Halo Alumni Warga!</h2>
+          <p class="lead"></p>
+          <p class="mb-4">Terima kasih telah bersedia berpartisipasi untuk membantu kami dalam mengembangkan mutu pendidikan dengan berbagi informasi mengenai diri anda!</p>
+          <p class="mb-0"><a href="#" class="btn btn-primary px-3 py-2">Daftar Disini</a></p>
         </div>
       </div>
     </div>

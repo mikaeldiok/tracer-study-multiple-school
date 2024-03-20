@@ -7,7 +7,7 @@ return [
     'gender'                    => 'Jenis Kelamin',
     'birth_place'               => 'Tempat Lahir',
     'birth_date'                => 'Tanggal Lahir',
-    'year_class'                => 'Angkatan Masuk',
+    'year_class'                => 'Tahun Angkatan',
     'year_graduate'             => 'Tahun Lulus',
     'major'                     => 'Jurusan',
     'height'                    => 'Tinggi Badan',

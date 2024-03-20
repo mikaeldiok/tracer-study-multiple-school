@@ -28,8 +28,7 @@
           </div>
         @endif
         <li class="nav-item {{Route::currentRouteName() == 'frontend.index' ? 'active' : ''}}"><a href="/" class="nav-link">Home</a></li>
-        <li class="nav-item {{Route::currentRouteName() == 'frontend.page.about' ? 'active' : ''}}"><a href="{{route('frontend.page.about')}}" class="nav-link">About</a></li>
-        <li class="nav-item {{Route::currentRouteName() == 'frontend.page.gallery' ? 'active' : ''}}"><a href="{{route('frontend.page.gallery')}}" class="nav-link">Gallery</a></li>
+        <li class="nav-item {{Route::currentRouteName() == 'frontend.students.registration' ? 'active' : ''}}"><a href="{{route('frontend.students.registration')}}" class="nav-link">Registrasi</a></li>
         @auth
           @if(Auth::user()->hasRole("user") ||  !Auth::user()->can('view_backend'))
             <!-- user only -->

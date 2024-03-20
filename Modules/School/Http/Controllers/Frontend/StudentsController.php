@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laracasts\Flash\Flash;
 use Log;
 use Auth;
+use Modules\School\Http\Requests\Frontend\StudentsRequest;
 use Modules\School\Services\StudentService;
 use Modules\Tracer\DataTables\StudentRecordsDataTable;
 use Modules\Tracer\Services\RecordService;
@@ -135,6 +137,49 @@ class StudentsController extends Controller
     }
 
 
+    public function registration()
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Create';
+
+        $options = $this->studentService->create()->data;
+
+        return view(
+            "school::frontend.$module_name.create",
+            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options')
+        );
+    }
+    public function store(StudentsRequest $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Store';
+
+        $students = $this->studentService->store($request);
+
+        $$module_name_singular = $students->data;
+
+        if(!$students->error){
+            Flash::success('<i class="fas fa-check"></i> '.label_case($module_name_singular).' Silakan login dengan data anda!')->important();
+
+            return redirect("/login");
+        }else{
+            Flash::error("<i class='fas fa-times-circle'></i> Silakan perbaiki kesalahan anda")->important();
+            return redirect("/students/registration");
+        }
+
+    }
     /**
      * Show student details
      *

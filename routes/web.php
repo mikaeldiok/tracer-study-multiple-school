@@ -32,8 +32,6 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('terms', 'FrontendController@terms')->name('terms');
 
     Route::group(['as' => 'page.'], function () {
-        Route::get('about', 'FrontendController@about')->name('about');
-        Route::get('gallery', 'FrontendController@gallery')->name('gallery');
     });
 
     Route::group(['middleware' => ['auth']], function () {

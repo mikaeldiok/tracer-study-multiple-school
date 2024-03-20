@@ -35,7 +35,7 @@
           <h2 class="display-4 mb-3">Halo Alumni Warga!</h2>
           <p class="lead"></p>
           <p class="mb-4">Terima kasih telah bersedia berpartisipasi untuk membantu kami dalam mengembangkan mutu pendidikan dengan berbagi informasi mengenai diri anda!</p>
-          <p class="mb-0"><a href="#" class="btn btn-primary px-3 py-2">Daftar Disini</a></p>
+          <p class="mb-0"><a href="{{route('frontend.students.registration')}}" class="btn btn-primary px-3 py-2">Daftar Disini</a></p>
         </div>
       </div>
     </div>

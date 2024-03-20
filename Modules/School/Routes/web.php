@@ -54,6 +54,7 @@ Route::group(['namespace' => '\Modules\School\Http\Controllers\Frontend', 'as' =
     $controller_name = 'StudentsController';
     Route::get("$module_name/registration", ['as' => "$module_name.registration", 'uses' => "$controller_name@registration"]);
     Route::post("$module_name/store", ['as' => "$module_name.store", 'uses' => "$controller_name@store"]);
+    Route::get("$module_name/{id}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
 });
 
 /*

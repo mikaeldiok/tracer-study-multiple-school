@@ -38,7 +38,7 @@
             <div class="col-4">
                 <div class="float-right">
                     @can('student_area')
-                        <x-buttons.create route='{{ route("frontend.$module_name_records.createSrRecords",$student) }}' title="{{__('Create')}} {{ ucwords(Str::singular($module_name_records)) }}">Create</x-buttons.create>
+                        <x-buttons.create route='{{ route("frontend.$module_name_records.createSrRecords",$student) }}' title="{{__('Tambah Riwayat')}} {{ ucwords(Str::singular($module_name_records)) }}">Tambah Riwayat</x-buttons.create>
                     @endcan
                 </div>
             </div>

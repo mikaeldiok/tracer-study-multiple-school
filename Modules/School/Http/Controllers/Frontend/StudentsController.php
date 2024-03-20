@@ -166,6 +166,14 @@ class StudentsController extends Controller
 
         $module_action = 'Store';
 
+        if(auth()->user()){
+            if(auth()->user()->can('student_area')){
+
+                Flash::error("<i class='fas fa-times-circle'></i> Anda tidak bisa menambahkan data ketika login")->important();
+                return redirect("/students/registration");
+            }
+        }
+
         $students = $this->studentService->store($request);
 
         $$module_name_singular = $students->data;

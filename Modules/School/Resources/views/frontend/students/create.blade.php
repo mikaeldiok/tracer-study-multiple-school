@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="card m-3 border">
+        <div class="card m-3 shadow">
             <div class="card-body">
                 <div class="row">
                     <div class="col-8">

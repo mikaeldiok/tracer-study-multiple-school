@@ -117,7 +117,7 @@
             $field_name = 'graduate_at';
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
@@ -129,13 +129,13 @@
         <div class="form-group">
             <?php
             $field_name = 'income';
-            $field_lable = label_case($field_name);
+            $field_lable = label_case("Pemasukan");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                                '0' => "< Rp. 4.500.000",
-                                '1' => "Rp. 4.500.000 - Rp. 6.000.000",
-                                '2' => "> Rp. 6.000.000",
+                                '0' => "Rp0 - Rp4.500.000",
+                                '1' => "Rp4.500.000 - Rp6.000.000",
+                                '2' => "> Rp6.000.000",
                                 ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}

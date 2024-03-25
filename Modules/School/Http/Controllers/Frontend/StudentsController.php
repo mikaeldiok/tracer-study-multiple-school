@@ -166,6 +166,8 @@ class StudentsController extends Controller
 
         $module_action = 'Store';
 
+        $request->request->add(['available' => false]);
+
         if(auth()->user()){
             if(auth()->user()->can('student_area')){
 

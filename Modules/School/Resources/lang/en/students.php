@@ -19,5 +19,6 @@ return [
     'certificate'               => 'certificate',
     'nik'                       => 'NIK',
     'email'                     => 'Email',
-    'phone'                     => 'Phone'
+    'phone'                     => 'Phone',
+    'unit_origin'               => 'Unit Asal'
 ];

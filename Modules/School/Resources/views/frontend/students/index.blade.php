@@ -1,4 +1,4 @@
-@extends('school::frontend.layouts.catalog')
+@extends('frontend.layouts.app')
 
 @section('title')
 {{ __("Student") }}
@@ -6,6 +6,13 @@
 
 @section('content')
 
+<div class="owl-carousel loop-block-31 mb-3">
+    <div class="bg-primary" style="height:100px"  data-stellar-background-ratio="0.5">
+
+    </div>
+
+    </div>
+</div>
 <div class="px-4 z-2">
     <div class="row">
 

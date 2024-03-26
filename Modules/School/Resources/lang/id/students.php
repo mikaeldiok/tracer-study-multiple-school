@@ -20,5 +20,5 @@ return [
     'nik'                       => 'NIK',
     'email'                     => 'Email',
     'phone'                     => 'Phone',
-    'unit_origin'               => 'Unit Asal'
+    'unit_origin'               => 'Sekolah Asal di Yayasan Warga'
 ];

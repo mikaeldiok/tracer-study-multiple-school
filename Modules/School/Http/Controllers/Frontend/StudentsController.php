@@ -61,7 +61,7 @@ class StudentsController extends Controller
 
         $module_action = 'Index';
 
-        $students = $this->studentService->getAllStudents()->data;
+        $students = [];
 
         //determine connections
         $connection = config('database.default');

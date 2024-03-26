@@ -11,12 +11,8 @@
 </div>
 <div class="row">
 @foreach($students as $student)
-    <div class="col-6 col-sm-6 pb-3 card-padding d-none d-sm-none d-md-block" style="margin-right: 0px;">
-        @include('school::frontend.students.student-card-big-horizontal')
-    </div>
-
-    <div class="col-12 pb-2 card-padding d-sm-block d-md-none" style="margin-right: 0px;">
-        @include('school::frontend.students.student-card-big-horizontal')
+    <div class="col-6 col-sm-4 pb-3 card-padding d-none d-sm-none d-md-block" style="margin-right: 0px;">
+        @include('school::frontend.students.student-card-medium')
     </div>
 @endforeach
 </div>
@@ -24,6 +20,3 @@
     {{$students->links()}}
 </div>
 
-@push('after-scripts')
-    @include("school::frontend.students.dynamic-scripts")
-@endpush

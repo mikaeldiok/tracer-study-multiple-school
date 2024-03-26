@@ -28,7 +28,7 @@
               <span class="block-48-text-1">Data alumni</span>
               <div class="block-48-counter ftco-number" data-number="10000">0</div>
               <span class="block-48-text-1 mb-4 d-block">Alumni Warga School</span>
-              <p class="mb-0"><a href="#" class="btn btn-white px-3 py-2">Cek data alumni</a></p>
+              <p class="mb-0"><a href="{{route('frontend.students.index')}}" class="btn btn-white px-3 py-2">Cek data alumni</a></p>
             </div>
         </div>
         <div class="col-md-6 welcome-text">

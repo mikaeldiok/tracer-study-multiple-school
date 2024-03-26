@@ -90,46 +90,13 @@ class StudentService{
         $student =Student::query()->available();
 
         if(count($request->all()) > 0){
-            if($request->has('major')){
-                $student->whereIn('major', $request->input('major'));
+
+            if($request->has('unit_origin')){
+                $student->whereIn('unit_origin', $request->input('unit_origin'));
             }
 
-            if($request->has('year_class')){
+            if($request->has('year_graduate')){
                 $student->whereIn('year_class', $request->input('year_class'));
-            }
-
-            if($request->has('height')){
-                $student->where('height', ">=", (float)$request->input('height'));
-            }
-
-            if($request->has('weight')){
-                $student->where('weight', ">=", (float)$request->input('weight'));
-            }
-
-            if($request->has('skills')){
-                $student->where(function ($query) use ($request){
-                    $checkSkills = $request->input('skills');
-                    foreach($checkSkills as $skill){
-                        if($request->input('must_have_all_skills')){
-                            $query->where('skills', 'like','%'.$skill.'%');
-                        }else{
-                            $query->orWhere('skills', 'like','%'.$skill.'%');
-                        }
-                    }
-                });
-            }
-
-            if($request->has('certificate')){
-                $student->where(function ($query) use ($request){
-                    $checkCerts = $request->input('certificate');
-                    foreach($checkCerts as $cert){
-                        if($request->input('must_have_all_certificate')){
-                            $query->where('certificate', 'like','%'.$cert.'%');
-                        }else{
-                            $query->orWhere('certificate', 'like','%'.$cert.'%');
-                        }
-                    }
-                });
             }
         }
 
@@ -144,13 +111,11 @@ class StudentService{
 
     public function getPaginatedStudents($pagination,$request){
 
-        $student =Student::query()->available();
-
+        $student = [];
         if(count($request->all()) > 0){
-
+            $student =Student::query()->available();
+            $student = $student->paginate($pagination);
         }
-
-        $student = $student->paginate($pagination);
 
         return (object) array(
             'error'=> false,

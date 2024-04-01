@@ -43,7 +43,7 @@
 
         <div class="row mt-4">
             <div class="col">
-                {{ html()->form('POST', route("backend.$module_name.store"))->class('form')->attributes(['enctype'=>"multipart/form-data"])->open() }}
+                {{ html()->form('POST', route("backend.$module_name.storeSrRecords"))->class('form')->attributes(['enctype'=>"multipart/form-data"])->open() }}
 
                 @include ("tracer::backend.$module_name.form")
 

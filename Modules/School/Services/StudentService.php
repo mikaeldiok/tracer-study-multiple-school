@@ -430,11 +430,7 @@ class StudentService{
 
     public static function prepareStatusFilter(){
 
-        $raw_status = Core::getRawData('recruitment_status');
         $status = [];
-        foreach($raw_status as $key => $value){
-            $status += [$value => $value];
-        }
 
         return $status;
     }

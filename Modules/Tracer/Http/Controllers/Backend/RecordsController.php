@@ -90,31 +90,6 @@ class RecordsController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function createSrRecords($id)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'Create';
-
-        $create = $this->recordService->createSrByID($id);
-        $options = $create->data;
-        $student_id =  $create->student_id;
-
-        return view(
-            "tracer::backend.$module_name.create",
-            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options','student_id')
-        );
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -147,30 +122,6 @@ class RecordsController extends Controller
         return redirect("admin/$module_name");
     }
 
-    public function storeSrRecords(RecordsRequest $request)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'Store';
-
-        $records = $this->recordService->store($request);
-
-        $$module_name_singular = $records->data;
-
-        if(!$records->error){
-            Flash::success('<i class="fas fa-check"></i> '.label_case($module_name_singular).' Data Added Successfully!')->important();
-        }else{
-            Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
-        }
-
-        $userid = auth()->user()->id;
-        return redirect("students/$userid");
-    }
 
     /**
      * Display the specified resource.

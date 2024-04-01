@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Log;
 use Auth;
+use Flash;
 use Modules\Tracer\Services\RecordService;
 use Spatie\Activitylog\Models\Activity;
 
@@ -199,7 +200,7 @@ class RecordsController extends Controller
      *
      * @return Response
      */
-    public function store(RecordsRequest $request)
+    public function store(Request $request)
     {
         if(Auth::user()->can('student_area') && !Auth::user()->isSuperAdmin()){
             $student_id = Auth::user()->student->id;
@@ -229,7 +230,8 @@ class RecordsController extends Controller
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
 
-        return redirect("admin/$module_name");
+        $userid = auth()->user()->student->id;
+        return redirect("students/$userid");
     }
 
     public function edit($id)

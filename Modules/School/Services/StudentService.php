@@ -437,29 +437,8 @@ class StudentService{
 
     public static function prepareOptions(){
 
-        $raw_majors = Core::getRawData('major');
-        $majors = [];
-        foreach($raw_majors as $key => $value){
-            $majors += [$value => $value];
-        }
 
-        $skills_raw = Core::getRawData('skills');
-        $skills = [];
-        foreach($skills_raw as $value){
-            $skills += [$value => $value];
-        }
-
-        $certificate_raw= Core::getRawData('certificate');
-        $certificate = [];
-        foreach($certificate_raw as $value){
-            $certificate += [$value => $value];
-        }
-
-        $options = array(
-            'majors'         => $majors,
-            'skills'              => $skills,
-            'certificate'         => $certificate,
-        );
+        $options = [];
 
         return $options;
     }

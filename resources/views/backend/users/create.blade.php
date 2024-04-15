@@ -65,6 +65,22 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'unit_id';
+                            $field_lable = "unit id";
+                            $field_placeholder = $field_lable;
+                            $required = "required";
+                            $select_options = config('unit-code');
+                            ?>
+                            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+                            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     {{ html()->label(__('labels.backend.users.fields.email'))->class('col-sm-2 form-control-label')->for('email') }}
 

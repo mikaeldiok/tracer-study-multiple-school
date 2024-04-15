@@ -17,7 +17,7 @@
         <div class="form-group">
             <?php
             $field_name = 'last_name';
-            $field_lable = "Nama Belakang";
+            $field_lable = "Nama Belakangasdasd";
             $field_placeholder = $field_lable;
             $required = "required";
             ?>

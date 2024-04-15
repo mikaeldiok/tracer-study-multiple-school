@@ -14,7 +14,7 @@ return [
     'weight'                    => 'Berat Badan',
     'religion'                  => 'Agama',
     'photo'                     => 'Foto',
-    'available'                 => 'Data Tracer',
+    'available'                 => 'Confirmed?',
     'skills'                    => 'Keahlian',
     'certificate'               => 'Sertifikasi',
     'nik'                       => 'NIK',

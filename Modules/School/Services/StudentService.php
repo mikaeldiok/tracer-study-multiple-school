@@ -2,6 +2,7 @@
 
 namespace Modules\School\Services;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Modules\School\Entities\Core;
 use Modules\School\Entities\Student;
@@ -87,18 +88,20 @@ class StudentService{
 
     public function filterStudents($pagination,$request){
 
-        $student =Student::query()->available();
+        $student =Student::available();
 
         if(count($request->all()) > 0){
 
             if($request->has('unit_origin')){
-                $student->whereIn('unit_origin', $request->input('unit_origin'));
+                $student->whereIn('unit_origin', [$request->input('unit_origin')]);
             }
 
             if($request->has('year_graduate')){
-                $student->whereIn('year_class', $request->input('year_class'));
+                $student->whereIn('year_class', [$request->input('year_class')]);
             }
         }
+
+        \Log::debug($student->get());
 
         $student = $student->paginate($pagination);
 
@@ -111,7 +114,7 @@ class StudentService{
 
     public function getPaginatedStudents($pagination,$request){
 
-        $student = [];
+        $student = new LengthAwarePaginator([], 0, $pagination);
         if(count($request->all()) > 0){
             $student =Student::query()->available();
             $student = $student->paginate($pagination);

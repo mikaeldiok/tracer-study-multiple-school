@@ -2,11 +2,6 @@
 
 @section('title') {{ __($module_action) }} {{ $module_title }} @stop
 
-@section('breadcrumbs')
-<x-backend-breadcrumbs>
-    <x-backend-breadcrumb-item type="active" icon='{{ $module_icon }}'>{{ $module_title }}</x-backend-breadcrumb-item>
-</x-backend-breadcrumbs>
-@stop
 
 @section('content')
 <div class="card">
@@ -22,8 +17,8 @@
                     <th id="name">: {{ $student->name }}</th>
                 </tr>
                 <tr>
-                    <td>Student ID</td>
-                    <th id="student_id">: {{ $student->student_id }}</th>
+                    <td>Unit Asal</td>
+                    <th id="student_id">: {{ config('unit-code.'.$student->unit_origin) }}</th>
                 </tr>
             </tbody>
         </table>

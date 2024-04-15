@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Modules\School\Entities\Student;
 
 class FrontendController extends Controller
 {
@@ -14,9 +15,10 @@ class FrontendController extends Controller
     public function index()
     {
         $body_class = '';
+        $student_count = Student::count();
 
         return view("frontend.index",
-            compact('body_class')
+            compact('body_class','student_count')
         );
 
     }

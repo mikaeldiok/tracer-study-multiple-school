@@ -48,33 +48,7 @@
         @endif
     </div>
 </div>
-<div class="row">
-    <div class="col-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'student_id';
-            $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "required";
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'nik';
-            $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "required";
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
-        </div>
-    </div>
-</div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
@@ -91,8 +65,8 @@
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-</div>
-<div class="row">
+</div> -->
+<!-- <div class="row">
     <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
@@ -113,8 +87,8 @@
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-</div>
-<div class="row">
+</div> -->
+<!-- <div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php
@@ -144,8 +118,21 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <?php
+            $field_name = 'unit_origin';
+            $field_lable = __("school::$module_name.$field_name");
+            $field_placeholder = "-- Pilih --";
+            $required = "";
+            $select_options = config('unit-code');
+            ?>
+            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+            {{ html()->select($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
+        </div>
+    </div>
     <div class="col-4">
         <div class="form-group">
             <?php

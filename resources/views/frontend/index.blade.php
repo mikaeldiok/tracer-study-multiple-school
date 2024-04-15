@@ -25,8 +25,8 @@
       <div class="row">
         <div class="col-md-6 pr-5">
           <div class="block-48">
-              <span class="block-48-text-1">Data alumni</span>
-              <div class="block-48-counter ftco-number" data-number="10000">0</div>
+              <span class="block-48-text-1">Lebih dari</span>
+              <div class="block-48-counter ftco-number" data-number="{{$student_count}}">0</div>
               <span class="block-48-text-1 mb-4 d-block">Alumni Warga School</span>
               <p class="mb-0"><a href="{{route('frontend.students.index')}}" class="btn btn-white px-3 py-2">Cek data alumni</a></p>
             </div>

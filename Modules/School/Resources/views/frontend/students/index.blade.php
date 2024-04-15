@@ -7,22 +7,16 @@
 @section('content')
 
 <div class="owl-carousel loop-block-31 mb-3">
-    <div class="bg-primary" style="height:100px"  data-stellar-background-ratio="0.5">
-
-    </div>
-
-    </div>
+    <div class="bg-primary" style="height:100px" data-stellar-background-ratio="0.5"></div>
 </div>
 <div class="px-4 z-2">
     <div class="row">
-
-    <div class="col-lg-3 mb-5">
+        <div class="col-lg-3 mb-5">
             <div class="card bg-white border-light shadow flex-md-row no-gutters p-4">
                 <div class="card-body d-flex flex-column justify-content-between col-auto py-3">
-                    <form name="filterForm" id="filterForm" method="post" action="javascript:void(0)">
+                    <form name="filterForm" id="filterForm" method="get" action="{{ route('frontend.students.filterStudents') }}">
                         @csrf
-
-                        {{ method_field('POST') }}
+                        @method('POST')
                         @include('school::frontend.students.filter-form')
                         <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                         <button class="btn btn-outline-danger" id="clearFilter"><i class="fa fa-times"></i>Clear Filter</button>
@@ -33,11 +27,9 @@
         <div class="col-lg-9 mb-5">
             <div class="card bg-white border-light shadow flex-md-row no-gutters p-4">
                 <div class="card-body d-flex flex-column justify-content-between col-auto py-4 px-2">
-                    @if (count($students) > 0)
-                        <section id="students">
-                            @include('school::frontend.students.students-card-loader')
-                        </section>
-                    @endif
+                    <section id="students">
+                        @include('school::frontend.students.students-card-loader')
+                    </section>
                 </div>
             </div>
         </div>
@@ -73,9 +65,30 @@
                 alert('Students could not be loaded.');
             });
         }
-    });
 
-    $(function() {
+        $('#filterForm').submit(function(e) {
+            e.preventDefault();
+
+            $('#submit').html('Please Wait...');
+            $("#submit").attr("disabled", true);
+
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#submit').html('Submit');
+                    $("#submit").attr("disabled", false);
+                    console.log(response);
+                    $('#students').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('An error occurred while processing your request.');
+                }
+            });
+        });
+
         $('body').on('click', '#clearFilter', function(e) {
             e.preventDefault();
 
@@ -87,75 +100,19 @@
                     $("#filterForm").trigger("reset");
 
                     $('#skills').multiselect('refresh');
-
                     $('#certificate').multiselect('refresh');
-
                     $('#major').multiselect('refresh');
-
                     $('#year_class').multiselect('refresh');
-
+                    console.log(response);
                     $('#students').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('An error occurred while clearing the filter.');
                 }
             });
         });
     });
 </script>
-<script >
-    if ($("#filterForm").length > 0) {
-        $("#filterForm").validate({
-            rules: {
-                // name: {
-                //     required: true,
-                //     maxlength: 50
-                // },
-                // email: {
-                //     required: true,
-                //     maxlength: 50,
-                //     email: true,
-                // },
-                // message: {
-                //     required: true,
-                //     maxlength: 300
-                // },
-            },
-            messages: {
-                // name: {
-                //     required: "Please enter name",
-                //     maxlength: "Your name maxlength should be 50 characters long."
-                // },
-                // email: {
-                //     required: "Please enter valid email",
-                //     email: "Please enter valid email",
-                //     maxlength: "The email name should less than or equal to 50 characters",
-                // },
-                // message: {
-                //     required: "Please enter message",
-                //     maxlength: "Your message name maxlength should be 300 characters long."
-                // },
-            },
-            submitHandler: function(form) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                // $('#submit').html('Please Wait...');
-                // $("#submit").attr("disabled", true);
-                $.ajax({
-                    url: "{{route('frontend.students.filterStudents')}}",
-                    type: "GET",
-                    data: $('#filterForm').serialize(),
-                    success: function(response) {
-                        // $('#submit').html('Submit');
-                        // $("#submit").attr("disabled", false);
-                        // document.getElementById("filterForm").reset();
 
-                        $('#students').html(response);
-
-                    }
-                });
-            }
-        })
-    }
-</script>
 @endpush

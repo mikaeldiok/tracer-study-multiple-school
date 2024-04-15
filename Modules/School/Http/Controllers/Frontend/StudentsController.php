@@ -61,7 +61,7 @@ class StudentsController extends Controller
 
         $module_action = 'Index';
 
-        $students = [];
+        $students = collect();
 
         //determine connections
         $connection = config('database.default');

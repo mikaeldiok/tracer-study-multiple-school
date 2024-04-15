@@ -18,7 +18,7 @@ class GenerateMenus
     public function handle($request, Closure $next)
     {
         \Menu::make('admin_sidebar', function ($menu) {
-            // Dashboard
+
             $menu->add('<i class="cil-speedometer c-sidebar-nav-icon"></i> Dashboard', [
                 'route' => 'backend.dashboard',
                 'class' => 'c-sidebar-nav-item',
@@ -26,6 +26,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => 'admin/dashboard*',
+                'permission'    => ['view_backend'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',

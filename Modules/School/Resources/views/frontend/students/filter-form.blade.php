@@ -34,7 +34,7 @@
             $select_options = $options['year_class'];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->multiselect($field_name,$select_options)->name($field_name.'[]')->class('form-control')->attributes(["$required",'multiple' => 'multiple']) }}
+            {{ html()->select($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -67,9 +67,9 @@ $(document).ready(function() {
         });
 
 
-    $('#year_class').multiselect({
-            enableFiltering: true,
-        });
+    // $('#year_class').multiselect({
+    //         enableFiltering: true,
+    //     });
 });
 
 </script>

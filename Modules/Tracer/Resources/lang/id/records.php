@@ -2,7 +2,7 @@
 
 return [
 
-    'name'                      => 'Nama Institusi',
+    'name'                      => 'Nama Sekolah/Perusahaan',
     'role'                      => 'Peran/Jabatan',
     'province'                  => 'Provinsi',
     'city'                      => 'Kota/Kabupaten',

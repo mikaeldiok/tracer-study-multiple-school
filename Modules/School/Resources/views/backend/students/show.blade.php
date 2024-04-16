@@ -25,6 +25,10 @@
                     <td>Student ID</td>
                     <th id="student_id">: {{ $student->student_id }}</th>
                 </tr>
+                <tr>
+                    <td>Unit Asal</td>
+                    <th id="Unit Asal">: {{ config('unit-code')[$student->unit_origin] }}</th>
+                </tr>
             </tbody>
         </table>
         <hr>

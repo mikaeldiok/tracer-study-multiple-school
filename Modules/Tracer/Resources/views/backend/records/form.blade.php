@@ -4,7 +4,7 @@
         <div class="form-group">
             <?php
             $field_name = 'level_id';
-            $field_lable = label_case($field_name);
+            $field_lable = label_case("saat ini sedang?");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = $options['level'];

@@ -134,7 +134,7 @@ class StudentsDataTable extends DataTable
             Column::make('id')->hidden(),
             Column::make('photo')->title(__("school::students.photo")),
             Column::make('name')->title(__("school::students.name")),
-            Column::make('student_id')->title(__("school::students.student_id")),
+            Column::make('unit_origin')->title(__("school::students.unit_origin")),
             Column::make('available')->title(__("school::students.available")),
             Column::make('created_at'),
             Column::make('updated_at')->hidden(),

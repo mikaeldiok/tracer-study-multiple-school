@@ -15,21 +15,6 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 col-sm-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'is_work';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Pilih --";
-            $required = "required";
-            $select_options = ['1' => "ya",'0' => "tidak"];
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php
@@ -129,13 +114,16 @@
         <div class="form-group">
             <?php
             $field_name = 'income';
-            $field_lable = label_case("Pemasukan");
+            $field_lable = label_case("Pemasukan perbulan");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                                '0' => "Rp0 - Rp4.500.000",
-                                '1' => "Rp4.500.000 - Rp6.000.000",
-                                '2' => "> Rp6.000.000",
+                                '0' => "Tidak Memiliki Pemasukan",
+                                '1' => "Rp1 - Rp4.500.000",
+                                '2' => "Rp4.500.000 - Rp6.000.000",
+                                '3' => "Rp6.000.000 - Rp8.000.000",
+                                '4' => "Rp8.000.000 - Rp10.000.000",
+                                '5' => "> Rp10.000.000"
                                 ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}

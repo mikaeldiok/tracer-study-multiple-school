@@ -129,6 +129,10 @@ class Student extends UserModel implements HasMedia
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    public function records()
+    {
+        return $this->hasMany('Modules\Tracer\Entities\Record');
+    }
 
     public function scopeAvailable($query){
         return $query->where('available','1');

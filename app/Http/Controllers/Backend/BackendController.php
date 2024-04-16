@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Modules\School\Entities\Student;
 
 class BackendController extends Controller
 {
@@ -13,7 +14,13 @@ class BackendController extends Controller
      */
     public function index()
     {
+        $alumni_count = Student::count();
+        $alumni_count_work = Student::whereHas('records', function ($query) {
+            $query->whereHas('unit', function ($q) {
+                $q->where('name', 'Bekerja');
+            });
+        })->count();
 
-        return view('backend.index');
+        return view('backend.index',compact('alumni_count','alumni_count_work'));
     }
 }

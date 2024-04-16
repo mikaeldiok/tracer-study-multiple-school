@@ -10,6 +10,7 @@ use App\Models\Traits\HasHashedMediaTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Core\Entities\Unit;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -27,7 +28,7 @@ class Record extends BaseModel
     protected static $logAttributes = ['name', 'id'];
 
     public function unit(){
-        return $this->belongsTo('Modules\School\Entities\Student');
+        return $this->belongsTo(Unit::class,'level_id');
     }
 }
 

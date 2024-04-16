@@ -19,6 +19,26 @@
 
         <!-- Dashboard Content Area -->
 
+        <div class="row my-2">
+            <div class="col-sm-4">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-text">{{$alumni_count}}</h2>
+                        <h5 class="card-title">Total Alumni</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-text">{{$alumni_count_work}}</h2>
+                        <h5 class="card-title">Jumlah Siswa Bekerja</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- / Dashboard Content Area -->
 
     </div>

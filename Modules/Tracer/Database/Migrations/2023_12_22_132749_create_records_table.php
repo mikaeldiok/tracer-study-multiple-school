@@ -15,7 +15,7 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->string('unit_id');
+            $table->bigInteger('level_id');
             $table->string('name');
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable();

@@ -7,5 +7,4 @@ return [
     "3" => "SMP WARGA",
     "4" => "SMA WARGA",
     "5" => "SMK WARGA",
-    "6" => "STTW",
 ];

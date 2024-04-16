@@ -12,13 +12,6 @@
 @endsection
 
 @section('content')
-<?php
-    //Total Donations
-    $total = 0;
-    foreach($$module_name_singular->donations as $donation){
-        $total += $donation->amount;
-    }
-?>
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -55,40 +48,6 @@
                     <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Detail</a>
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="donasi" role="tabpanel" aria-labelledby="donasi-tab">
-                    <h4 class="text-primary text-center my-4">Riwayat Donasi</h4>
-                    
-                    <tr>
-                        <td>
-                            <strong>Total Donasi</strong>  
-                        </td>
-                        <td> 
-                            <h4>Rp. {{number_format($total, 2, ',', '.')}}</h4>                         
-                        </td>
-                    </tr>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tanggal</th>
-                                <th scope="col">Nominal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($$module_name_singular->donations as $donation)
-                                <tr>
-                                    <td>
-                                    {{$donation->donation_date}}    
-                                    </td>
-                                    <td> 
-                                        Rp. {{number_format($donation->amount, 2, ',', '.')}}                              
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table> 
-                </div>
                 <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
                     <hr>
                     @include('backend.includes.show')

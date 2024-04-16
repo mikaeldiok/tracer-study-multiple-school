@@ -91,6 +91,35 @@ class RecordsController extends Controller
     }
 
 
+    public function createSrRecords($id)
+    {
+        if(Auth::user()->can('student_area') && !Auth::user()->isSuperAdmin()){
+            $student_id = Auth::user()->student->id;
+
+            if($id != $student_id){
+                return abort(404);
+            }
+        }
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Create';
+
+        $create = $this->recordService->createSrByID($id);
+        $options = $create->data;
+        $student_id =  $create->student_id;
+
+        return view(
+            "tracer::backend.$module_name.create",
+            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options','student_id')
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *

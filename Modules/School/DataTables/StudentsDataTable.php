@@ -48,6 +48,9 @@ class StudentsDataTable extends DataTable
 
                 return $availability;
             })
+            ->editColumn('unit_origin', function ($data) {
+                return config('unit-code')[$data->unit_origin];
+            })
             ->editColumn('photo', function ($data) {
                 $module_name = $this->module_name;
 

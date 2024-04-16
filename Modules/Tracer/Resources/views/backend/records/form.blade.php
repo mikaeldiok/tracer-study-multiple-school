@@ -79,7 +79,7 @@
             $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}        </div>
+            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}        </div>
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -90,7 +90,7 @@
             $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -131,9 +131,10 @@
 <!-- Date Time Picker & Moment Js-->
 <script type="text/javascript">
 $(function() {
-    var date = moment("{{$$module_name_singular->birth_date ?? ''}}", 'YYYY-MM-DD').toDate();
+    var date = moment("{{$$module_name_singular->enter_at ?? ''}}", 'YYYY-MM-DD').toDate();
     $('.datetime').datetimepicker({
-        format: 'DD/MM/YYYY',
+        format: 'YYYY',
+        viewMode: 'years', // Only show years
         date: date,
         icons: {
             time: 'far fa-clock',

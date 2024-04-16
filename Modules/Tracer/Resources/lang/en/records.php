@@ -6,6 +6,6 @@ return [
     'role'                      => 'Peran/Jabatan',
     'province'                  => 'Provinsi',
     'city'                      => 'Kota/Kabupaten',
-    'enter_at'                  => 'Tanggal Masuk',
-    'graduate_at'              => 'Tanggal Keluar',
+    'enter_at'                  => 'Tahun Masuk',
+    'graduate_at'              => 'Tahun Keluar',
 ];

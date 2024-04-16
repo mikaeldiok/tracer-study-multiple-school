@@ -109,7 +109,7 @@
             $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}        </div>
+            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}        </div>
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -120,7 +120,7 @@
             $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -133,9 +133,12 @@
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                                '0' => "< Rp. 4.500.000",
-                                '1' => "Rp. 4.500.000 - Rp. 6.000.000",
-                                '2' => "> Rp. 6.000.000",
+                                '0' => "Tidak Memiliki Pemasukan",
+                                '1' => "Rp1 - Rp4.500.000",
+                                '2' => "Rp4.500.000 - Rp6.000.000",
+                                '3' => "Rp6.000.000 - Rp8.000.000",
+                                '4' => "Rp8.000.000 - Rp10.000.000",
+                                '5' => "> Rp10.000.000"
                                 ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -158,9 +161,10 @@
 <!-- Date Time Picker & Moment Js-->
 <script type="text/javascript">
 $(function() {
-    var date = moment("{{$$module_name_singular->birth_date ?? ''}}", 'YYYY-MM-DD').toDate();
+    var date = moment("{{$$module_name_singular->enter_at ?? ''}}", 'YYYY-MM-DD').toDate();
     $('.datetime').datetimepicker({
-        format: 'DD/MM/YYYY',
+        format: 'YYYY',
+        viewMode: 'years', // Only show years
         date: date,
         icons: {
             time: 'far fa-clock',

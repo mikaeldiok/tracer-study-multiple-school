@@ -29,21 +29,6 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 col-sm-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'still_working';
-            $field_lable = "Masih berada di institusi ?";
-            $field_placeholder = "-- Pilih --";
-            $required = "required";
-            $select_options = ['1' => "ya",'0' => "tidak"];
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php

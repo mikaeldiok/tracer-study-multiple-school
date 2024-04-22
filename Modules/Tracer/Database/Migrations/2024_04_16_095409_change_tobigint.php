@@ -14,7 +14,7 @@ class ChangeTobigint extends Migration
     public function up()
     {
         Schema::table('records', function (Blueprint $table) {
-            $table->bigInteger('level_id')->change();
+            // $table->bigInteger('level_id')->change();
         });
     }
 
@@ -27,7 +27,7 @@ class ChangeTobigint extends Migration
     {
 
         Schema::table('records', function (Blueprint $table) {
-            $table->string('level_id')->change();
+            // $table->string('level_id')->change();
         });
     }
 }

@@ -137,7 +137,7 @@ class StudentsController extends Controller
     }
 
 
-    public function create()
+    public function registration()
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

@@ -183,7 +183,7 @@
         <div class="form-group">
             <?php
             $field_name = 'email';
-            $field_lable = __("Email");
+            $field_lable = __("Confirm Email");
             $field_placeholder = "";
             $required = "required";
             ?>

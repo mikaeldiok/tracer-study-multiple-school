@@ -37,7 +37,7 @@ Route::group(['namespace' => '\Modules\Tracer\Http\Controllers\Frontend', 'as' =
     Route::get("$module_name/catalog/filter", ['as' => "$module_name.filterRecords", 'uses' => "$controller_name@filterRecords"]);
     Route::get("$module_name/{id}-{recordId}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
     Route::get("$module_name/create-sr/{id}", ['as' => "$module_name.createSrRecords", 'uses' => "$controller_name@createSrRecords"]);
-    Route::post("$module_name/store}", ['as' => "$module_name.store", 'uses' => "$controller_name@store"]);
+    Route::resource("$module_name", "$controller_name");
 });
 
 /*

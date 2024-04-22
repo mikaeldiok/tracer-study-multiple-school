@@ -8,7 +8,7 @@ return [
     'birth_place'               => 'Tempat Lahir',
     'birth_date'                => 'Tanggal Lahir',
     'year_class'                => 'Tahun Angkatan Masuk',
-    'year_graduate'             => 'Tahun Lulus',
+    'year_graduate'             => 'Tahun Lulus (Bisa lebih dari satu)',
     'major'                     => 'Jurusan',
     'height'                    => 'Tinggi Badan',
     'weight'                    => 'Berat Badan',
@@ -20,5 +20,5 @@ return [
     'nik'                       => 'NIK',
     'email'                     => 'Email',
     'phone'                     => 'Phone',
-    'unit_origin'               => 'Sekolah Asal di Yayasan Warga'
+    'unit_origin'               => 'Sekolah di Yayasan Warga (Bisa lebih dari satu)'
 ];

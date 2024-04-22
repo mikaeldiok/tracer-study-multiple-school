@@ -79,7 +79,6 @@
                 success: function(response) {
                     $('#submit').html('Submit');
                     $("#submit").attr("disabled", false);
-                    console.log(response);
                     $('#students').html(response);
                 },
                 error: function(xhr, status, error) {
@@ -91,26 +90,12 @@
 
         $('body').on('click', '#clearFilter', function(e) {
             e.preventDefault();
+            $("#filterForm").trigger("reset");
 
-            $.ajax({
-                url: "{{route('frontend.students.filterStudents')}}",
-                type: "GET",
-                data: null,
-                success: function(response) {
-                    $("#filterForm").trigger("reset");
+            $('#name').val('');
+            $('#unit_origin').val('');
+            $('#year_graduate').val('');
 
-                    $('#skills').multiselect('refresh');
-                    $('#certificate').multiselect('refresh');
-                    $('#major').multiselect('refresh');
-                    $('#year_class').multiselect('refresh');
-                    console.log(response);
-                    $('#students').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alert('An error occurred while clearing the filter.');
-                }
-            });
         });
     });
 </script>

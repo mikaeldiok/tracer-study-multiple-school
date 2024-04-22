@@ -92,16 +92,18 @@ class StudentService{
 
         if(count($request->all()) > 0){
 
+            if($request->has('name')){
+                $student->where('name', 'like', '%' . $request->input('name') . '%');
+            }
+
             if($request->has('unit_origin')){
                 $student->whereIn('unit_origin', [$request->input('unit_origin')]);
             }
 
             if($request->has('year_graduate')){
-                $student->whereIn('year_class', [$request->input('year_class')]);
+                $student->whereIn('year_graduate', [$request->input('year_graduate')]);
             }
         }
-
-        \Log::debug($student->get());
 
         $student = $student->paginate($pagination);
 
@@ -180,6 +182,24 @@ class StudentService{
         $data = $request->all();
         DB::beginTransaction();
 
+        if(in_array(0,$data['unit_origin'])){
+            DB::rollBack();
+            return (object) array(
+                'error'=> true,
+                'message'=> "Masukan Unit Tidak Valid!",
+                'data'=> null,
+            );
+        }
+
+        if(count($data['unit_origin']) != count($data['year_graduate'])){
+            DB::rollBack();
+            return (object) array(
+                'error'=> true,
+                'message'=> "Jumlah unit asal dan tahun lulus harus sama",
+                'data'=> null,
+            );
+        }
+
         try {
 
             $user = $this->createNormalUser($request);
@@ -197,10 +217,19 @@ class StudentService{
             if(!$request->input('student_id')){
                 $data['student_id'] = 0;
             }
+
             $studentObject = new Student;
             $studentObject->fill($data);
             $studentObject->user_id = $user->id;
 
+
+            if($studentObject->unit_origin){
+                $studentObject->unit_origin = implode(',', $studentObject->unit_origin);
+            }
+
+            if($studentObject->year_graduate){
+                $studentObject->year_graduate = implode(',', $studentObject->year_graduate);
+            }
 
             $studentObjectArray = $studentObject->toArray();
 
@@ -254,6 +283,14 @@ class StudentService{
 
         $student = Student::findOrFail($id);
 
+        if($student->unit_origin){
+            $student->unit_origin = explode(',', $student->unit_origin);
+        }
+
+        if($student->year_graduate){
+            $student->year_graduate = explode(',', $student->year_graduate);
+        }
+
         Log::info(label_case($this->module_title.' '.__function__)." | '".$student->name.'(ID:'.$student->id.") ' by User:".(Auth::user()->name ?? 'unknown').'(ID:'.(Auth::user()->id ?? "0").')');
 
         return (object) array(
@@ -269,6 +306,24 @@ class StudentService{
 
         DB::beginTransaction();
 
+        if(in_array(0,$data['unit_origin'])){
+            DB::rollBack();
+            return (object) array(
+                'error'=> true,
+                'message'=> "Unit Tidak Valid!",
+                'data'=> null,
+            );
+        }
+
+        if(count($data['unit_origin']) != count($data['year_graduate'])){
+            DB::rollBack();
+            return (object) array(
+                'error'=> true,
+                'message'=> "Jumlah unit asal dan tahun lulus harus sama",
+                'data'=> null,
+            );
+        }
+
         try{
 
             $student = new Student;
@@ -278,13 +333,14 @@ class StudentService{
                 $student->birth_date = Carbon::createFromFormat('d/m/Y', $student->birth_date)->format('Y-m-d');
             }
 
-            if($student->skills){
-                $student->skills = implode(',', $student->skills);
+            if($student->unit_origin){
+                $student->unit_origin = implode(',', $student->unit_origin);
             }
 
-            if($student->certificate){
-                $student->certificate = implode(',', $student->certificate);
+            if($student->year_graduate){
+                $student->year_graduate = implode(',', $student->year_graduate);
             }
+
 
             $updating = Student::findOrFail($id)->update($student->toArray());
 
@@ -450,20 +506,20 @@ class StudentService{
 
         $options = self::prepareOptions();
 
-        $year_class_raw = DB::table('students')
-                        ->select('year_class', DB::raw('count(*) as total'))
-                        ->groupBy('year_class')
-                        ->orderBy('year_class','desc')
+        $year_graduate_raw = DB::table('students')
+                        ->select('year_graduate', DB::raw('count(*) as total'))
+                        ->groupBy('year_graduate')
+                        ->orderBy('year_graduate','desc')
                         ->get();
-        $year_class = [];
-            foreach($year_class_raw as $item){
-                $year_class += [$item->year_class => $item->year_class];
+        $year_graduate = [];
+            foreach($year_graduate_raw as $item){
+                $year_graduate += [$item->year_graduate => $item->year_graduate];
                 // $year_class += [$item->year_class => $item->year_class." (".$item->total.")"];
             }
 
 
         $filterOp = array(
-            'year_class'          => $year_class,
+            'year_graduate'          => $year_graduate,
         );
 
         return array_merge($options,$filterOp);

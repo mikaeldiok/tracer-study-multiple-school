@@ -35,7 +35,7 @@ class StudentRecordsDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
 
-                return view('backend.includes.action_column_admin', compact('module_name', 'data'));
+                return view('frontend.includes.action_column_record', compact('module_name', 'data'));
             })
             ->editColumn('updated_at', function ($data) {
                 $module_name = $this->module_name;
@@ -83,7 +83,7 @@ class StudentRecordsDataTable extends DataTable
                 ->setTableId('records-table')
                 ->columns($this->getColumns())
                 ->minifiedAjax()
-                ->dom(config('mk-datatables.mk-dom'))
+                ->dom(config('mk-datatables.mk-dom-records'))
                 ->orderBy($created_at,'desc')
                 ->buttons(
                     Button::make('export'),

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Core\Entities\Unit;
+use Modules\School\Entities\Student;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -29,6 +30,10 @@ class Record extends BaseModel
 
     public function unit(){
         return $this->belongsTo(Unit::class,'level_id');
+    }
+
+    public function student(){
+        return $this->belongsTo(Student::class);
     }
 }
 

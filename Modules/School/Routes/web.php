@@ -56,6 +56,11 @@ Route::group(['namespace' => '\Modules\School\Http\Controllers\Frontend', 'as' =
     Route::get("$module_name/catalog", ['as' => "$module_name.index", 'uses' => "$controller_name@indexPaginated"]);
     Route::get("$module_name/catalog/filter", ['as' => "$module_name.filterStudents", 'uses' => "$controller_name@filterStudents"]);
     Route::post("$module_name/store", ['as' => "$module_name.store", 'uses' => "$controller_name@store"]);
+    Route::get("$module_name/edit/{id}", ['as' => "$module_name.edit", 'uses' => "$controller_name@edit"]);
+    Route::match(['put', 'patch'], "$module_name/{id}", [
+        'as' => "$module_name.update",
+        'uses' => "$controller_name@update"
+    ]);
     Route::get("$module_name/{id}", ['as' => "$module_name.show", 'uses' => "$controller_name@show"]);
 });
 

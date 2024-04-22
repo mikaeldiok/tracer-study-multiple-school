@@ -7,27 +7,51 @@
 <div class="card">
     <div class="card-body">
         <h3>Data Siswa</h3>
-        <table class="table">
+            <a href="{{route("frontend.students.edit",$student)}}" class="btn btn-primary my-2"><i class="fas fa-edit"></i>edit</a>
+        <div class="row mb-3">
+             <div class="col-12 col-sm-2">
+                <img src="{{asset($student->photo)}}" class="img-thumbnail" style="max-height:200px; max-width:150px;" />
+             </div>
+             <div class="col-12 col-sm-9">
+                <h4>Biodata</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <td>ID Data</td>
+                            <th id="student_id">: {{ $student->id }}</th>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <th id="name">: {{ $student->name }}</th>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+        </div>
+        <h3>Riwayat Sekolah di YPW</h3>
+        <table class="table table-sm">
             <tbody>
-                <td>ID Data</td>
-                    <th id="student_id">: {{ $student->id }}</th>
-                </tr>
+                <?php
+                    $units = $student->getUnits();
+                    $year_gradates = $student->getYearGraduates();
+                ?>
                 <tr>
-                    <td>Nama</td>
-                    <th id="name">: {{ $student->name }}</th>
+                    <th class="col-sm-2">Unit Sekolah</th>
+                    <th class="col-sm-10">Tahun Lulus</th>
                 </tr>
-                <tr>
-                    <td>Unit Asal</td>
-                    <th id="student_id">: {{ config('unit-code.'.$student->unit_origin) }}</th>
-                </tr>
+                @for($i = 0; $i<count($units);$i++)
+                    <tr>
+                        <td class="col-sm-2">{{config('unit-code')[$units[$i]]}}</td>
+                        <td class="col-sm-10">{{$year_gradates[$i]}}</td>
+                    </tr>
+                @endfor
             </tbody>
         </table>
-        <hr>
+        <br>
         <div class="row">
             <div class="col-8">
-                <h4 class="card-title mb-0">
-                    History Siswa
-                </h4>
+                <h3 class="card-title mb-0">
+                    Riwayat Alumni
+                </h3>
             </div>
             <!--/.col-->
             <div class="col-4">

@@ -50,9 +50,10 @@
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "required";
+            $select_options = [];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
     <div class="col-6">
@@ -62,9 +63,10 @@
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "required";
+            $select_options = ["sdfs"];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -103,13 +105,11 @@
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                                '0' => "Tidak Memiliki Pemasukan",
-                                '1' => "Rp1 - Rp4.500.000",
-                                '2' => "Rp4.500.000 - Rp6.000.000",
-                                '3' => "Rp6.000.000 - Rp8.000.000",
-                                '4' => "Rp8.000.000 - Rp10.000.000",
-                                '5' => "> Rp10.000.000"
-                                ];
+                                '0' => "< Rp2.000.000",
+                                '1' => "Rp2.000.000 - Rp6.000.000",
+                                '2' => "Rp6.000.000 - Rp10.000.000",
+                                '3' => "> Rp10.000.000"
+                            ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}

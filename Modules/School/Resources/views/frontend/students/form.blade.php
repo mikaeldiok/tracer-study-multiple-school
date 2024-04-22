@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
         <div class="form-group">
             <?php
             $field_name = 'name';
@@ -11,7 +11,7 @@
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
         </div>
     </div>
-    <div class="col-3">
+    <!-- <div class="col-3">
         <div class="form-group">
             <?php
             $field_name = 'photo';
@@ -22,7 +22,7 @@
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             <input id="{{$field_name}}" name="{{$field_name}}" multiple="" type="file">
         </div>
-    </div>
+    </div> -->
     <div class="col-3">
         @if($module_action == "Edit")
             <img src="{{asset($$module_name_singular->photo)}}" class="user-profile-image img-fluid img-thumbnail" style="max-height:200px; max-width:200px;" />
@@ -95,7 +95,7 @@
 </div> -->
 <div class="row">
 
-    <div class="col-12 col-sm-4">
+    <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
             $field_name = 'unit_origin';
@@ -105,10 +105,10 @@
             $select_options = config('unit-code');
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->multiselect($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-    <div class="col-4">
+    <!-- <div class="col-4">
         <div class="form-group">
             <?php
             $field_name = 'year_class';
@@ -119,17 +119,18 @@
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
-    </div>
-    <div class="col-4">
+    </div> -->
+    <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
             $field_name = 'year_graduate';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = "";
             $required = "required";
+            $years = range(1900, date('Y'));
+            $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
+            {{ html()->multiselect($field_name,array_reverse($select_options,true))->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
     </div>
 </div>
@@ -161,7 +162,7 @@
 </div>
 <div class="row">
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-12">
         <div class="form-group">
             <?php
@@ -174,7 +175,7 @@
             {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
         </div>
     </div>
-</div>
+</div> -->
 <hr>
 @if(true)
 <div class="row">
@@ -256,8 +257,13 @@ $(document).ready(function() {
                 enableFiltering: true,
             });
 
-        $('#certificate').multiselect({
+        $('#unit_origin').multiselect({
                 enableFiltering: true,
+            });
+
+        $('#year_graduate').multiselect({
+                enableFiltering: true,
+                maxHeight: 200,
             });
     });
 

@@ -1,42 +1,11 @@
-
 <div class="row">
-    <div class="col-12 col-sm-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'available';
-            $field_lable = label_case("Valid?");
-            $field_placeholder = "-- Pilih --";
-            $required = "required";
-            $select_options = [
-                '1' => 'Ya',
-                '0' => 'Tidak',
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options,1)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'name';
-            $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "required";
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
-        </div>
-    </div>
     <div class="col-3">
         <div class="form-group">
             <?php
             $field_name = 'photo';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "";
+            $field_placeholder = "";
+            $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             <input id="{{$field_name}}" name="{{$field_name}}" multiple="" type="file">
@@ -48,12 +17,26 @@
         @endif
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <?php
+            $field_name = 'name';
+            $field_lable = __("school::$module_name.$field_name");
+            $field_placeholder = "";
+            $required = "required";
+            ?>
+            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+        </div>
+    </div>
+</div>
 <!-- <div class="row">
     <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
             $field_name = 'gender';
-            $field_lable = label_case($field_name);
+            $field_lable = label_case('jenis kelamin');
             $field_placeholder = "-- Pilih --";
             $required = "";
             $select_options = [
@@ -65,8 +48,6 @@
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-</div> -->
-<!-- <div class="row">
     <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
@@ -87,14 +68,14 @@
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-</div> -->
-<!-- <div class="row">
+</div>
+<div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php
             $field_name = 'birth_place';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
+            $field_placeholder = "";
             $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -110,17 +91,13 @@
             $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            <div class="input-group date datetime" id="{{$field_name}}" name="{{$field_name}}" data-target-input="nearest">
-                {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control datetimepicker-input')->attributes(["$required", 'data-target'=>"#$field_name"]) }}
-                <div class="input-group-append" data-target="#{{$field_name}}" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
-                </div>
-            </div>
+            {{ html()->date($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div> -->
 <div class="row">
-    <div class="col-12 col-sm-4">
+
+    <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
             $field_name = 'unit_origin';
@@ -133,19 +110,19 @@
             {{ html()->multiselect($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
-    <div class="col-4">
+    <!-- <div class="col-4">
         <div class="form-group">
             <?php
             $field_name = 'year_class';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "";
+            $field_placeholder = "";
+            $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
-    </div>
-    <div class="col-4">
+    </div> -->
+    <div class="col-12 col-sm-6">
         <div class="form-group">
             <?php
             $field_name = 'year_graduate';
@@ -155,7 +132,7 @@
             $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->multiselect($field_name,array_reverse($select_options))->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
+            {{ html()->multiselect($field_name,array_reverse($select_options,true))->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
     </div>
 </div>
@@ -165,8 +142,8 @@
             <?php
             $field_name = 'email';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
-            $required = "";
+            $field_placeholder = "";
+            $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
@@ -177,7 +154,7 @@
             <?php
             $field_name = 'phone';
             $field_lable = __("school::$module_name.$field_name");
-            $field_placeholder = $field_lable;
+            $field_placeholder = "";
             $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -193,7 +170,7 @@
             <?php
             $field_name = 'address';
             $field_lable = "Alamat";
-            $field_placeholder = $field_lable;
+            $field_placeholder = "";
             $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -203,13 +180,14 @@
 </div>
 <hr>
 @if(true)
+<h4>Login Data</h4>
 <div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php
             $field_name = 'email';
             $field_lable = __("Email");
-            $field_placeholder = $field_lable;
+            $field_placeholder = "";
             $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -224,7 +202,7 @@
             <?php
             $field_name = 'password';
             $field_lable = "Password";
-            $field_placeholder = $field_lable;
+            $field_placeholder = "password tidak diubah";
             $required = $module_action != "Edit" ? "required" : "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -236,7 +214,7 @@
             <?php
             $field_name = 'password_confirmation';
             $field_lable = "Confirm Password";
-            $field_placeholder = $field_lable;
+            $field_placeholder = "password tidak diubah";
             $required = $module_action != "Edit" ? "required" : "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
@@ -288,6 +266,7 @@ $(document).ready(function() {
 
         $('#year_graduate').multiselect({
                 enableFiltering: true,
+                maxHeight: 200,
             });
     });
 

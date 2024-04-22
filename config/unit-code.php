@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "0" => "Tanpa Unit",
+    "0" => "--",
     "1" => "KB/TK WARGA",
     "2" => "SD WARGA",
     "3" => "SMP WARGA",

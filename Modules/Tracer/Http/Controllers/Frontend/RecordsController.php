@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Log;
 use Auth;
 use Flash;
+use Modules\Tracer\Http\Requests\Frontend\RecordsRequest;
 use Modules\Tracer\Services\RecordService;
 use Spatie\Activitylog\Models\Activity;
 
@@ -239,9 +240,9 @@ class RecordsController extends Controller
         if(Auth::user()->can('student_area') && !Auth::user()->isSuperAdmin()){
             $student_id = Auth::user()->student->id;
 
-            if($id != $student_id){
-                return abort(404);
-            }
+            // if($id != $student_id){
+            //     return abort(404);
+            // }
         }
 
         $module_title = $this->module_title;
@@ -257,11 +258,12 @@ class RecordsController extends Controller
 
         $$module_name_singular = $records->data;
 
+        $student_id =  $$module_name_singular->student->id;
         $options = $this->recordService->prepareOptions();
 
         return view(
-            "tracer::backend.$module_name.edit",
-            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options')
+            "tracer::frontend.$module_name.edit",
+            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options','student_id')
         );
     }
 
@@ -278,10 +280,6 @@ class RecordsController extends Controller
         if(Auth::user()->can('student_area') && !Auth::user()->isSuperAdmin()){
             $student_id = Auth::user()->student->id;
             $checked_id = $request->get('student_id');
-
-            if($checked_id != $student_id){
-                return abort(404);
-            }
         }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -299,14 +297,14 @@ class RecordsController extends Controller
         $records = $this->recordService->update($request,$id);
 
         $$module_name_singular = $records->data;
-
+        \Log::debug("she");
         if(!$records->error){
             Flash::success('<i class="fas fa-check"></i> '.label_case($module_name_singular).' Data Updated Successfully!')->important();
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
 
-        return redirect("admin/$module_name");
+        return redirect("students/$student_id");
     }
 
 }

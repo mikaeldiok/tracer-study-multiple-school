@@ -3,7 +3,7 @@
 ?>
 <div class="d-flex justify-content-between mb-1">
     <div id="students-count">
-        Menampilkan {{$students->count()}} dari {{ $students->total() > 100 ? "100+" : $students->total()}} Siswa
+        Menampilkan {{$students->count()}} dari {{ $students->total() > 100 ? "100+" : $students->total()}} Alumni
     </div>
     <div id="students-loader">
         {{$students->links()}}

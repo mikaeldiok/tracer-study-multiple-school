@@ -4,25 +4,10 @@
         <div class="form-group">
             <?php
             $field_name = 'level_id';
-            $field_lable = label_case($field_name);
+            $field_lable = label_case("saat ini sedang?");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = $options['level'];
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'is_work';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Pilih --";
-            $required = "required";
-            $select_options = ['1' => "ya",'0' => "tidak"];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
@@ -40,21 +25,6 @@
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <div class="form-group">
-            <?php
-            $field_name = 'still_working';
-            $field_lable = "Masih berada di institusi ?";
-            $field_placeholder = "-- Pilih --";
-            $required = "required";
-            $select_options = ['1' => "ya",'0' => "tidak"];
-            ?>
-            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -80,9 +50,10 @@
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "required";
+            $select_options = config('provinces');
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control select2')->attributes(["$required"]) }}
         </div>
     </div>
     <div class="col-6">
@@ -92,9 +63,10 @@
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "required";
+            $select_options = config('regencies');
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required", 'aria-label'=>'Image']) }}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control select2')->attributes(["$required"]) }}
         </div>
     </div>
 </div>
@@ -117,7 +89,7 @@
             $field_name = 'graduate_at';
             $field_lable = __("tracer::$module_name.$field_name");
             $field_placeholder = $field_lable;
-            $required = "required";
+            $required = "";
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
@@ -126,20 +98,18 @@
 </div>
 <div class="row">
 <div class="col-12 col-sm-6">
-        <div class="form-group">
+        <div class="form-group work-input">
             <?php
             $field_name = 'income';
-            $field_lable = label_case($field_name);
+            $field_lable = label_case("Pemasukan perbulan");
             $field_placeholder = "-- Pilih --";
             $required = "required";
             $select_options = [
-                                '0' => "Tidak Memiliki Pemasukan",
-                                '1' => "Rp1 - Rp4.500.000",
-                                '2' => "Rp4.500.000 - Rp6.000.000",
-                                '3' => "Rp6.000.000 - Rp8.000.000",
-                                '4' => "Rp8.000.000 - Rp10.000.000",
-                                '5' => "> Rp10.000.000"
-                                ];
+                                '0' => "< Rp2.000.000",
+                                '1' => "Rp2.000.000 - Rp6.000.000",
+                                '2' => "Rp6.000.000 - Rp10.000.000",
+                                '3' => "> Rp10.000.000"
+                            ];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
@@ -158,26 +128,50 @@
 
 @push ('after-scripts')
 
-<!-- Date Time Picker & Moment Js-->
 <script type="text/javascript">
-$(function() {
-    var date = moment("{{$$module_name_singular->enter_at ?? ''}}", 'YYYY-MM-DD').toDate();
-    $('.datetime').datetimepicker({
-        format: 'YYYY',
-        viewMode: 'years', // Only show years
-        date: date,
-        icons: {
-            time: 'far fa-clock',
-            date: 'far fa-calendar-alt',
-            up: 'fas fa-arrow-up',
-            down: 'fas fa-arrow-down',
-            previous: 'fas fa-chevron-left',
-            next: 'fas fa-chevron-right',
-            today: 'far fa-calendar-check',
-            clear: 'far fa-trash-alt',
-            close: 'fas fa-times'
-        }
-    });
-});
+    $(document).ready(function() {
+        function toggleWorkInput() {
+            var selectElement = document.getElementById('level_id');
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var levelValue = selectedOption.innerHTML;
 
+            console.log(levelValue);
+            if (levelValue === 'Bekerja') {
+                $('.work-input').show();
+            } else {
+                $('.work-input').hide();
+            }
+        }
+
+        // Initial call to toggleWorkInput
+        toggleWorkInput();
+
+        // Event listener for level_id change
+        $('#level_id').on('change', function() {
+            toggleWorkInput();
+        });
+    });
+
+
+    $(function() {
+        var date = moment("{{$$module_name_singular->enter_at ?? ''}}", 'YYYY-MM-DD').toDate();
+        $('.datetime').datetimepicker({
+            format: 'YYYY',
+            viewMode: 'years', // Only show years
+            date: date,
+            icons: {
+                time: 'far fa-clock',
+                date: 'far fa-calendar-alt',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'far fa-calendar-check',
+                clear: 'far fa-trash-alt',
+                close: 'fas fa-times'
+            }
+        });
+    });
+
+</script>
 @endpush

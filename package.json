@@ -43,6 +43,7 @@
         "waypoints": "^4.0.1"
     },
     "dependencies": {
+        "idn-area-data": "^3.1.0",
         "sweetalert2": "^11.1.7"
     }
 }

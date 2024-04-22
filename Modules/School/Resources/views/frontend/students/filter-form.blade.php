@@ -12,6 +12,20 @@
     <div class="col-12 col-sm-9">
         <div class="form-group">
             <?php
+            $field_name = 'name';
+            $field_lable = __("school::$module_name.$field_name");
+            $field_placeholder = "";
+            $required = "";
+            ?>
+            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-9">
+        <div class="form-group">
+            <?php
             $field_name = 'unit_origin';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = "-- Pilih --";
@@ -27,11 +41,11 @@
     <div class="col-9">
         <div class="form-group">
             <?php
-            $field_name = 'year_class';
+            $field_name = 'year_graduate';
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "";
-            $select_options = $options['year_class'];
+            $select_options = $options['year_graduate'];
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->select($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}

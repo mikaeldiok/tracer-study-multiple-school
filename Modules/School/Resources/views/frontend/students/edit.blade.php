@@ -1,12 +1,12 @@
-@extends('school::frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title')
- {{ __("Company List") }}
+ {{ __("Student Edit") }}
 @endsection
 
 @section('content')
 
-<section class="card-body">
+<section class="card-body bg-white">
     <div class="row mt-4">
         <div class="col">
             @if ($errors->any())
@@ -20,7 +20,7 @@
             @endif
             {{ html()->modelForm($$module_name_singular, 'PATCH', route("frontend.$module_name.update", $$module_name_singular))->class('form')->attributes(['enctype'=>"multipart/form-data"])->open() }}
 
-            @include ("school::frontend.$module_name.form")
+            @include ("school::frontend.$module_name.form-edit")
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
@@ -33,7 +33,7 @@
                         @can('delete_'.$module_name)
                         <button type="button" class="btn btn-danger delete-confirm"><i class="fas fa-trash-alt"></i></button>
                         @endcan
-                        <a href="{{ route("frontend.$module_name.home") }}" class="btn btn-warning" data-toggle="tooltip" title="{{__('labels.backend.cancel')}}"><i class="fas fa-reply"></i> Cancel</a>
+                        <a href="{{ route("frontend.$module_name.show",$student) }}" class="btn btn-warning" data-toggle="tooltip" title="{{__('labels.backend.cancel')}}"><i class="fas fa-reply"></i> Cancel</a>
                     </div>
                 </div>
             </div>

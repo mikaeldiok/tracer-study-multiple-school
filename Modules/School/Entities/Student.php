@@ -142,5 +142,12 @@ class Student extends UserModel implements HasMedia
         return $this->available;
     }
 
+    public function getUnits(){
+        return explode(",",$this->unit_origin);
+    }
+
+    public function getYearGraduates(){
+        return array_reverse(explode(",",$this->year_graduate));
+    }
 }
 

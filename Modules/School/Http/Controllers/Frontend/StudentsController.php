@@ -137,7 +137,7 @@ class StudentsController extends Controller
     }
 
 
-    public function registration()
+    public function create()
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -185,7 +185,7 @@ class StudentsController extends Controller
 
             return redirect("/login");
         }else{
-            Flash::error("<i class='fas fa-times-circle'></i> Silakan perbaiki kesalahan anda")->important();
+            Flash::error("<i class='fas fa-times-circle'></i> $students->message")->important();
             return redirect("/students/registration");
         }
 
@@ -225,5 +225,56 @@ class StudentsController extends Controller
         return $dataTable->render("school::frontend.$module_path.show",
             compact('module_title', 'module_name', 'module_name_records', 'module_icon','student', 'module_action')
         );
+    }
+
+    public function edit($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Edit';
+
+        $students = $this->studentService->edit($id);
+
+        $$module_name_singular = $students->data;
+
+        $options = [];
+
+        return view(
+            "school::frontend.$module_name.edit",
+            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options')
+        );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Update';
+
+        $this->validate($request, [
+            'photo'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $students = $this->studentService->update($request,$id);
+
+        $$module_name_singular = $students->data;
+
+        if(!$students->error){
+            Flash::success('<i class="fas fa-check"></i> '.label_case($module_name_singular).' Data Updated Successfully!')->important();
+        }else{
+            Flash::error("<i class='fas fa-times-circle'></i> Error! $students->message")->important();
+        }
+
+        return redirect("students/".$id);
     }
 }

@@ -40,6 +40,14 @@ class StudentRecordsDataTable extends DataTable
             ->addColumn('jenjang', function ($data) {
                 return $data->unit ? $data->unit->name : 0;
             })
+            ->editColumn('city', function ($data) {
+                $regencies = config('regencies');
+                if(array_key_exists($data->city,$regencies)){
+                    return $regencies[$data->city];
+                }else{
+                    return $data->city;
+                }
+            })
             ->editColumn('updated_at', function ($data) {
                 $module_name = $this->module_name;
 

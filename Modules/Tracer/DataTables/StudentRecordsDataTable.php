@@ -37,6 +37,9 @@ class StudentRecordsDataTable extends DataTable
 
                 return view('frontend.includes.action_column_record', compact('module_name', 'data'));
             })
+            ->addColumn('jenjang', function ($data) {
+                return $data->unit ? $data->unit->name : 0;
+            })
             ->editColumn('updated_at', function ($data) {
                 $module_name = $this->module_name;
 
@@ -113,7 +116,10 @@ class StudentRecordsDataTable extends DataTable
                   ->printable(false)
                   ->addClass('text-center'),
             Column::make('id')->hidden(),
+            Column::make('jenjang'),
             Column::make('name')->title(__("tracer::records.name")),
+            Column::make('city')->title(__("tracer::records.city")),
+            Column::make('enter_at')->title(__("tracer::records.enter_at")),
             Column::make('created_at'),
             Column::make('updated_at')->hidden(),
         ];

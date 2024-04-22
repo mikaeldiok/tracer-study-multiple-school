@@ -138,10 +138,10 @@
             console.log(levelValue);
             if (levelValue === 'Bekerja') {
                 $('.work-input').show();
-                $('[name="income"]').removeAttr('required');
+                $('#income').attr('required', 'required');
             } else {
                 $('.work-input').hide();
-                $('[name="income"]').attr('required', 'required');
+                $('#income').removeAttr('required');
             }
         }
 

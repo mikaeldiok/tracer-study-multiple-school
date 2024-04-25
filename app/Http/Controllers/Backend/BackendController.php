@@ -21,6 +21,27 @@ class BackendController extends Controller
             });
         })->count();
 
-        return view('backend.index',compact('alumni_count','alumni_count_work'));
+        $alumniArray = [];
+
+        $years = array_reverse(range(1900, date('Y')));
+        foreach($years as $year){
+            $countKBTK = Student::where('history_string', 'like', "%$year=>1%")->count();
+            $countSD = Student::where('history_string', 'like', "%$year=>2%")->count();
+            $countSMP = Student::where('history_string', 'like', "%$year=>3%")->count();
+            $countSMA = Student::where('history_string', 'like', "%$year=>4%")->count();
+            $countSMK = Student::where('history_string', 'like', "%$year=>5%")->count();
+
+            if(($countKBTK+$countSD+$countSMP+$countSMA+$countSMK) > 0){
+                $alumniArray[$year] = [
+                    "KB/TK" => $countKBTK,
+                    "SD" => $countSD,
+                    "SMP" => $countSMP,
+                    "SMA" => $countSMA,
+                    "SMK" => $countSMK
+                ];
+            }
+        }
+
+        return view('backend.index',compact('alumni_count','alumni_count_work','alumniArray'));
     }
 }

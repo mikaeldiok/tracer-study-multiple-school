@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Log;
+use Modules\School\DataTables\StudentsInsightDatatable;
 use Modules\School\Services\StudentService;
 use Modules\School\DataTables\StudentsDataTable;
 use Modules\School\Http\Requests\Backend\StudentsRequest;
@@ -70,6 +71,23 @@ class StudentsController extends Controller
         );
     }
 
+    public function indexDetail(StudentsInsightDatatable $dataTable)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::paginate();
+
+        return $dataTable->render("school::backend.$module_path.index-detail",
+            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action')
+        );
+    }
     /**
      * Select Options for Select 2 Request/ Response.
      *

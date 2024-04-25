@@ -231,6 +231,16 @@ class StudentService{
                 $studentObject->year_graduate = implode(',', $studentObject->year_graduate);
             }
 
+            //making the history_string
+            $unit_origin_array =explode(",",$studentObject->unit_origin);
+            $year_asc =array_reverse(explode(",",$studentObject->year_graduate));
+            $history_array= [];
+            for($i=0;$i<count($year_asc);$i++){
+                $history_array[] = $year_asc[$i]."=>".$unit_origin_array[$i];
+            }
+
+            $studentObject->history_string =implode(',', $history_array);
+
             $studentObjectArray = $studentObject->toArray();
 
             $student = Student::create($studentObjectArray);
@@ -341,6 +351,15 @@ class StudentService{
                 $student->year_graduate = implode(',', $student->year_graduate);
             }
 
+
+            $unit_origin_array =explode(",",$student->unit_origin);
+            $year_asc =array_reverse(explode(",",$student->year_graduate));
+            $history_array= [];
+            for($i=0;$i<count($year_asc);$i++){
+                $history_array[] = $year_asc[$i]."=>".$unit_origin_array[$i];
+            }
+
+            $student->history_string =implode(',', $history_array);
 
             $updating = Student::findOrFail($id)->update($student->toArray());
 

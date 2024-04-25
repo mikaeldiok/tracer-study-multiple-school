@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class StudentsDataTable extends DataTable
+class StudentsInsightDatatable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -54,6 +54,10 @@ class StudentsDataTable extends DataTable
                     $unit_origin[] = config('unit-code')[$unit_origin_raw];
                 }
                 return $unit_origin;
+            })
+            ->editColumn('year_graduate', function ($data) {
+                $years =explode(",",$data->year_graduate);
+                return array_reverse($years);
             })
             ->editColumn('photo', function ($data) {
                 $module_name = $this->module_name;
@@ -120,7 +124,7 @@ class StudentsDataTable extends DataTable
                 ->setTableId('students-table')
                 ->columns($this->getColumns())
                 ->minifiedAjax()
-                ->dom(config('mk-datatables.mk-dom'))
+                ->dom(config('mk-datatables.mk-dom-insights'))
                 ->orderBy($created_at,'desc')
                 ->buttons(
                     Button::make('export'),
@@ -152,7 +156,8 @@ class StudentsDataTable extends DataTable
             Column::make('id')->hidden(),
             Column::make('photo')->title(__("school::students.photo")),
             Column::make('name')->title(__("school::students.name")),
-            Column::make('unit_origin')->title(__("school::students.unit_origin")),
+            Column::make('unit_origin')->title(__("Unit Pendidikan")),
+            Column::make('year_graduate')->title(__("Tahun Lulus")),
             Column::make('available')->title(__("school::students.available")),
             Column::make('created_at'),
             Column::make('updated_at')->hidden(),

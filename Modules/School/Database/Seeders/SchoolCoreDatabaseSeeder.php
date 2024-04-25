@@ -18,7 +18,7 @@ class SchoolCoreDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        
+
         Schema::disableForeignKeyConstraints();
 
         $faker = \Faker\Factory::create();

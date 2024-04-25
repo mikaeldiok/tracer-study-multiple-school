@@ -25,21 +25,33 @@
                     <td>Student ID</td>
                     <th id="student_id">: {{ $student->student_id }}</th>
                 </tr>
-                <tr>
-                    <td>Unit Asal</td>
-                    <th id="Unit Asal">: {{ config('unit-code')[$student->unit_origin] }}</th>
-                </tr>
             </tbody>
         </table>
-        <hr>
+        <h3>Riwayat Sekolah di YPW</h3>
+        <table class="table table-sm">
+            <tbody>
+                <?php
+                    $units = $student->getUnits();
+                    $year_gradates = $student->getYearGraduates();
+                ?>
+                <tr>
+                    <th class="col-sm-2">Unit Sekolah</th>
+                    <th class="col-sm-10">Tahun Lulus</th>
+                </tr>
+                @for($i = 0; $i<count($units);$i++)
+                    <tr>
+                        <td class="col-sm-2">{{config('unit-code')[$units[$i]]}}</td>
+                        <td class="col-sm-10">{{$year_gradates[$i]}}</td>
+                    </tr>
+                @endfor
+            </tbody>
+        </table>
+        <br>
         <div class="row">
             <div class="col-8">
-                <h4 class="card-title mb-0">
-                    History Siswa
-                </h4>
-                <div class="small text-muted">
-                    @lang(":module_name Management Dashboard", ['module_name'=>Str::title($module_name_records)])
-                </div>
+                <h3 class="card-title mb-0">
+                    Riwayat Alumni
+                </h3>
             </div>
             <!--/.col-->
             <div class="col-4">

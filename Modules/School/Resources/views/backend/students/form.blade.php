@@ -155,7 +155,7 @@
             $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->multiselect($field_name,array_reverse($select_options))->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
+            {{ html()->multiselect($field_name,array_reverse($select_options,true))->class('form-control')->attributes(["$required", 'aria-label'=>'Image','type' => 'number', 'min' => 1900, 'max' => Carbon\Carbon::now()->year()]) }}
         </div>
     </div>
 </div>

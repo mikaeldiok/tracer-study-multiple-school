@@ -49,7 +49,7 @@
             $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, array_reverse($select_options,true))->class('form-control')->attributes(["$required"]) }}
+            {{ html()->select($field_name, array_reverse($select_options,true))->class('form-control select2')->attributes(["$required"]) }}
         </div>
     </div>
 </div>

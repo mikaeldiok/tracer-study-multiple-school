@@ -159,18 +159,22 @@
                 $('#income').attr('required', 'required');
 
                 $('.campus-input').hide();
+                $('#campus_status').val("");
                 $('#campus_status').removeAttr('required');
             }else if (levelValue === 'Kuliah') {
                 $('.campus-input').show();
                 $('#campus_status').attr('required', 'required');
 
                 $('.work-input').hide();
+                $('#income').val("");
                 $('#income').removeAttr('required');
             } else {
                 $('.work-input').hide();
+                $('#income').val("");
                 $('#income').removeAttr('required');
 
                 $('.campus-input').hide();
+                $('#campus_status').val("");
                 $('#campus_status').removeAttr('required');
             }
         }

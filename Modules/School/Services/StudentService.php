@@ -92,17 +92,27 @@ class StudentService{
 
         if(count($request->all()) > 0){
 
+            if(request()->input('year_graduate')){
+                $year_graduate = request()->input('year_graduate');
+                $student->where('year_graduate','LIKE',"%$year_graduate%");
+
+                if(request()->input('unit_origin')){
+                    $origin = request()->input('unit_origin');
+                    $student->where('history_string', 'LIKE', "%$year_graduate=>$origin%");
+                }
+            }
+
             if($request->has('name')){
                 $student->where('name', 'like', '%' . $request->input('name') . '%');
             }
 
-            if($request->has('unit_origin')){
-                $student->whereIn('unit_origin', [$request->input('unit_origin')]);
-            }
+            // if($request->has('unit_origin')){
+            //     $student->whereIn('unit_origin', [$request->input('unit_origin')]);
+            // }
 
-            if($request->has('year_graduate')){
-                $student->whereIn('year_graduate', [$request->input('year_graduate')]);
-            }
+            // if($request->has('year_graduate')){
+            //     $student->whereIn('year_graduate', [$request->input('year_graduate')]);
+            // }
         }
 
         $student = $student->paginate($pagination);

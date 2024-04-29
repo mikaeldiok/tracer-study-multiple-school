@@ -86,6 +86,12 @@ class StudentsController extends Controller
 
         $alumni_count = $module_model::query();
 
+        $alumni_count_kuliah = $module_model::whereHas('records', function ($query) {
+            $query->whereHas('unit', function ($q) {
+                $q->where('name', 'Kuliah');
+            });
+        });
+
         $alumni_count_work = $module_model::whereHas('records', function ($query) {
             $query->whereHas('unit', function ($q) {
                 $q->where('name', 'Bekerja');
@@ -96,19 +102,22 @@ class StudentsController extends Controller
             $year_graduate = request()->input('year_graduate');
             $alumni_count->where('year_graduate','LIKE',"%$year_graduate%");
             $alumni_count_work->where('year_graduate','LIKE',"%$year_graduate%");
+            $alumni_count_kuliah->where('year_graduate','LIKE',"%$year_graduate%");
 
             if(request()->input('unit_origin')){
                 $origin = request()->input('unit_origin');
                 $alumni_count->where('history_string', 'LIKE', "%$year_graduate=>$origin%");
                 $alumni_count_work->where('history_string', 'LIKE', "%$year_graduate=>$origin%");
+                $alumni_count_kuliah->where('history_string', 'LIKE', "%$year_graduate=>$origin%");
             }
         }
 
         $alumni_count = $alumni_count->count();
         $alumni_count_work = $alumni_count_work->count();
+        $alumni_count_kuliah = $alumni_count_kuliah->count();
 
         return $dataTable->render("school::backend.$module_path.index-detail",
-            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action','alumni_count','alumni_count_work')
+            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action','alumni_count','alumni_count_work','alumni_count_kuliah')
         );
     }
     /**

@@ -40,6 +40,14 @@
                 </div>
             </div>
             <div class="col-sm-4">
+                <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-text">{{$alumni_count_kuliah}}</h2>
+                        <h5 class="card-title">Jumlah Alumni Berkuliah</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
                 <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
                     <div class="card-body">
                         <h2 class="card-text">{{$alumni_count_work}}</h2>

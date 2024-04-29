@@ -38,7 +38,7 @@
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
             @if($core->mkstarter_core_code == "recruitment_status")
-            <small class="text-danger">Status yang paling akhir haruslah status yang menujukkan bahwa siswa diterima</small>
+            <small class="text-danger">Status yang paling akhir haruslah status yang menujukkan bahwa alumni diterima</small>
             @endif
         </div>
     </div>

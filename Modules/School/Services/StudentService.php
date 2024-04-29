@@ -713,7 +713,7 @@ class StudentService{
 
         $chart->labels($keys);
 
-        $chart->dataset("Jumlah Siswa", 'bar',$values);
+        $chart->dataset("Jumlah Alumni", 'bar',$values);
 
         $chart->options([
             "xAxis" => [

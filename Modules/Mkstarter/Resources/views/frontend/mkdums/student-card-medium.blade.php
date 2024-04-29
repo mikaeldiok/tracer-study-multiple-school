@@ -19,10 +19,10 @@
     <!-- detail -->
 
     @include('mkstarter::frontend.mkdums.mkdum-card-detail')
-    
+
     <!-- detail end -->
     <span class="donation-time mb-3 d-block">--</span>
-    
+
   </div>
 </div>
 
@@ -59,14 +59,14 @@
 
                     Toast.fire({
                     icon: 'success',
-                    title: 'Siswa ditambahkan ke daftar anda'
+                    title: 'Alumni ditambahkan ke daftar anda'
                     })
                   }else{
 
                     $('#choose-mkdum-{{$mkdum->id}}').removeClass( 'btn-danger');
                     $('#choose-mkdum-{{$mkdum->id}}').addClass( 'btn-success');
                     $('#choose-mkdum-{{$mkdum->id}}').html( 'pilih');
-                    
+
                     const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',

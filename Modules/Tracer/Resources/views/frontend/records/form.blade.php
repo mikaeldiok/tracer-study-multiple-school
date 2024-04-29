@@ -15,6 +15,24 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-12 col-sm-6">
+        <div class="form-group campus-input">
+            <?php
+            $field_name = 'campus_status';
+            $field_lable = label_case("Jenis Kampus");
+            $field_placeholder = "-- Pilih --";
+            $required = "";
+            $select_options = [
+                "PTN" => "PTN",
+                "PTS" => "PTS"
+            ];
+            ?>
+            {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-6">
         <div class="form-group">
             <?php
@@ -139,9 +157,21 @@
             if (levelValue === 'Bekerja') {
                 $('.work-input').show();
                 $('#income').attr('required', 'required');
+
+                $('.campus-input').hide();
+                $('#campus_status').removeAttr('required');
+            }else if (levelValue === 'Kuliah') {
+                $('.campus-input').show();
+                $('#campus_status').attr('required', 'required');
+
+                $('.work-input').hide();
+                $('#income').removeAttr('required');
             } else {
                 $('.work-input').hide();
                 $('#income').removeAttr('required');
+
+                $('.campus-input').hide();
+                $('#campus_status').removeAttr('required');
             }
         }
 

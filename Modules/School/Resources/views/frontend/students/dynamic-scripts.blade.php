@@ -7,18 +7,18 @@
 
     $(document).ready(function(){
         $(document).on('click', 'button.choose-student', function(e){
-            var ele = $(this);  
+            var ele = $(this);
             var fireAjax = false;
 
             if(ele.hasClass('with-warning') && ele.hasClass('btn-danger')){
                 Swal.fire({
                 title: "PERHATIAN!!!",
-                text: "Membatalkan siswa dengan status 'tidak tersedia' dapat membuat anda tidak bisa memilih siswa ini hingga statusnya 'tersedia' lagi setelah memuat ulang halaman ini.",
+                text: "Membatalkan alumni dengan status 'tidak tersedia' dapat membuat anda tidak bisa memilih alumni ini hingga statusnya 'tersedia' lagi setelah memuat ulang halaman ini.",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonColor: "#dc3545",
                 confirmButtonColor: "#a8a8a8",
-                confirmButtonText: "Ya, saya ingin membatalkan siswa ini",
+                confirmButtonText: "Ya, saya ingin membatalkan alumni ini",
                 closeOnConfirm: false
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -26,11 +26,11 @@
                     }
                 });
             }else{
-                
+
                 if(ele.hasClass('btn-danger')){
                     Swal.fire({
                         title: 'Hapus Data Booking ini?',
-                        text: 'Data booking akan dihilangkan dari daftar. Anda masih bisa memilih siswa ini lagi nanti.',
+                        text: 'Data booking akan dihilangkan dari daftar. Anda masih bisa memilih alumni ini lagi nanti.',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
@@ -43,8 +43,8 @@
                     });
                 }else{
                     Swal.fire({
-                    title: "Tambahkan siswa ke daftar pilihan anda?",
-                    text: "Kami akan memberitahu siswa tersebut untuk melakukan konfirmasi",
+                    title: "Tambahkan alumni ke daftar pilihan anda?",
+                    text: "Kami akan memberitahu alumni tersebut untuk melakukan konfirmasi",
                     type: "warning",
                     showCancelButton: true,
                     cancelButtonColor: "#dc3545",
@@ -62,7 +62,7 @@
         });
 
         function callPickStudent(ele){
-                ele.attr("disabled", true); 
+                ele.attr("disabled", true);
                 ele.html( 'please wait..');
                 $.ajax({
                     type: "POST",
@@ -87,14 +87,14 @@
 
                         Toast.fire({
                         icon: 'success',
-                        title: 'Siswa ditambahkan ke daftar anda. <a href="/bookings/list">Lihat Daftar..</a>'
+                        title: 'Alumni ditambahkan ke daftar anda. <a href="/bookings/list">Lihat Daftar..</a>'
                         })
-                        
+
                         ele.removeClass( 'btn-success');
                         ele.addClass( 'btn-danger');
                         ele.html( 'BATAL');
-                        
-                        ele.attr("disabled", false); 
+
+                        ele.attr("disabled", false);
                     }else{
 
                         const Toast = Swal.mixin({
@@ -110,12 +110,12 @@
                         icon: 'warning',
                         title: response.message
                         })
-                        
+
                         ele.removeClass( 'btn-danger');
                         ele.addClass( 'btn-success');
                         ele.html( 'PILIH');
-                        
-                        ele.attr("disabled", false); 
+
+                        ele.attr("disabled", false);
                     }
                     },
                     error: function (request, status, error,dudu) {

@@ -20,7 +20,7 @@ return [
 
     'school' => [
         'title'             => 'Sekolah',
-        'students'          => 'Siswa',
+        'students'          => 'Alumni',
         'cores'             => 'Data Sekolah',
     ],
 

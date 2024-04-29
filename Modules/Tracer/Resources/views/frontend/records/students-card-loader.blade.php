@@ -1,7 +1,7 @@
 
 <div class="d-flex justify-content-between mb-1">
     <div id="records-count">
-        Menampilkan {{$records->count()}} dari {{ $records->total() > 100 ? "100+" : $records->total()}} Siswa
+        Menampilkan {{$records->count()}} dari {{ $records->total() > 100 ? "100+" : $records->total()}} Alumni
     </div>
     <div id="records-loader">
         {{$records->links()}}

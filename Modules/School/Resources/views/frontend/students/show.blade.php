@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h3>Data Siswa</h3>
+        <h3>Data Alumni</h3>
             <a href="{{route("frontend.students.edit",$student)}}" class="btn btn-primary my-2"><i class="fas fa-edit"></i>edit</a>
         <div class="row mb-3">
              <div class="col-12 col-sm-2">

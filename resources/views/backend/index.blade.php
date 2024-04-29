@@ -23,7 +23,7 @@
             <div class="col-sm-4">
                 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
-                        <h2 class="card-text">{{$alumni_count}}</h2>
+                        <h2   class="card-text">{{$alumni_count}}</h2>
                         <h5 class="card-title">Total Alumni</h5>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
                     <div class="card-body">
                         <h2 class="card-text">{{$alumni_count_work}}</h2>
-                        <h5 class="card-title">Jumlah Siswa Bekerja</h5>
+                        <h5 class="card-title">Jumlah Alumni Bekerja</h5>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Tahun</th>
+                                <th>Tahun Lulus</th>
                                 <th class="text-warning">KB/TK</th>
                                 <th class="text-success">SD</th>
                                 <th class="text-danger">SMP</th>
@@ -56,7 +56,7 @@
                         </thead>
                         <tbody>
                             @foreach($alumniArray as $year => $alumni)
-                                <tr>
+                                <tr style="font-size: 18px;">
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year])}}">{{$year}}</a></td>
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year,"unit_origin"=>1])}}">{{$alumni["KB/TK"] > 0 ? $alumni["KB/TK"] : "-" }}</a></td>
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year,"unit_origin"=>2])}}">{{$alumni["SD"] > 0 ? $alumni["SD"] : "-" }}</a></td>

@@ -1,7 +1,7 @@
 
 <div class="d-flex justify-content-between mb-1">
     <div id="mkdums-count">
-        Menampilkan {{$mkdums->count()}} dari {{ $mkdums->total() > 100 ? "100+" : $mkdums->total()}} Siswa
+        Menampilkan {{$mkdums->count()}} dari {{ $mkdums->total() > 100 ? "100+" : $mkdums->total()}} Alumni
     </div>
     <div id="mkdums-loader">
         {{$mkdums->links()}}

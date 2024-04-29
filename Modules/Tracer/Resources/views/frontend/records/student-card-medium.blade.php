@@ -19,10 +19,10 @@
     <!-- detail -->
 
     @include('tracer::frontend.records.record-card-detail')
-    
+
     <!-- detail end -->
     <span class="donation-time mb-3 d-block">--</span>
-    
+
   </div>
 </div>
 
@@ -59,14 +59,14 @@
 
                     Toast.fire({
                     icon: 'success',
-                    title: 'Siswa ditambahkan ke daftar anda'
+                    title: 'Alumni ditambahkan ke daftar anda'
                     })
                   }else{
 
                     $('#choose-record-{{$record->id}}').removeClass( 'btn-danger');
                     $('#choose-record-{{$record->id}}').addClass( 'btn-success');
                     $('#choose-record-{{$record->id}}').html( 'pilih');
-                    
+
                     const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',

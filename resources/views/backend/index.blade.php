@@ -51,6 +51,7 @@
                                 <th class="text-danger">SMP</th>
                                 <th class="text-primary">SMA</th>
                                 <th style="color: #6f42c1;">SMK</th>
+                                <th >Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +63,7 @@
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year,"unit_origin"=>3])}}">{{$alumni["SMP"] > 0 ? $alumni["SMP"] : "-" }}</a></td>
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year,"unit_origin"=>4])}}">{{$alumni["SMA"] > 0 ? $alumni["SMA"] : "-" }}</a></td>
                                     <td><a href="{{route("backend.students.index-detail",["year_graduate"=>$year,"unit_origin"=>5])}}">{{$alumni["SMK"] > 0 ? $alumni["SMK"] : "-" }}</a></td>
+                                    <td>{{$alumni["total"]}}</td>
                                 </tr>
                              @endforeach
                         </tbody>

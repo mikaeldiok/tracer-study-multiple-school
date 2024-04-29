@@ -37,7 +37,8 @@ class BackendController extends Controller
                     "SD" => $countSD,
                     "SMP" => $countSMP,
                     "SMA" => $countSMA,
-                    "SMK" => $countSMK
+                    "SMK" => $countSMK,
+                    "total" => $countKBTK+$countSD+$countSMP+$countSMA+$countSMK
                 ];
             }
         }

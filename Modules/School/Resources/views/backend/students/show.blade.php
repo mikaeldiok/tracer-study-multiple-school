@@ -22,8 +22,8 @@
                     <th id="name">: {{ $student->name }}</th>
                 </tr>
                 <tr>
-                    <td>Student ID</td>
-                    <th id="student_id">: {{ $student->student_id }}</th>
+                    <td>Alamat</td>
+                    <th id="student_id">: {{ $student->addrress }}</th>
                 </tr>
             </tbody>
         </table>

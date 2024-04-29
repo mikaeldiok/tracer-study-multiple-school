@@ -23,6 +23,10 @@
                             <td>Nama</td>
                             <th id="name">: {{ $student->name }}</th>
                         </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <th id="student_id">: {{ $student->addrress }}</th>
+                        </tr>
                     </tbody>
                 </table>
              </div>

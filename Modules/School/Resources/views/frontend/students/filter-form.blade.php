@@ -45,10 +45,11 @@
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "";
-            $select_options = $options['year_graduate'];
+            $years = range(1900, date('Y'));
+            $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->select($field_name, array_reverse($select_options,true))->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>

@@ -32,7 +32,8 @@
         "spatie/laravel-html": "3.*",
         "spatie/laravel-medialibrary": "^9.12.2",
         "spatie/laravel-permission": "^5.1",
-        "yajra/laravel-datatables": "^1.5"
+        "yajra/laravel-datatables": "^1.5",
+        "zanysoft/laravel-zip": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

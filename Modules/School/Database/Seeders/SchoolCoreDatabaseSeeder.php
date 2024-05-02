@@ -3,6 +3,7 @@
 namespace Modules\School\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Core\Entities\Unit;
 use Modules\School\Entities\Core;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -24,31 +25,39 @@ class SchoolCoreDatabaseSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         // Add the master administrator, user id of 1df
-        $schoolcores = [
+        $units = [
             [
-                'school_core_code'              => "major",
-                'school_core_name'              => "Jurusan",
-                'school_core_value'             => "jurusan1,jurusan2,jurusan3,--bisa ditambah",
+                'name'              => "KB/TK",
+                'level'              => "1",
             ],
             [
-                'school_core_code'              => "recruitment_status",
-                'school_core_name'              => "Status Rekrutan",
-                'school_core_value'             => "status1,status2,--custom,status3",
+                'name'              => "SD",
+                'level'              => "2",
             ],
             [
-                'school_core_code'              => "skills",
-                'school_core_name'              => "Status Rekrutan",
-                'school_core_value'             => "skill1,skill2,skill3,--bisa ditambah",
+                'name'              => "SMP",
+                'level'              => "3",
             ],
             [
-                'school_core_code'              => "certificate",
-                'school_core_name'              => "Status Rekrutan",
-                'school_core_value'             => "cert1,cert2,cert3,--bisa ditambah",
+                'name'              => "SMA",
+                'level'              => "4",
+            ],
+            [
+                'name'              => "SMK",
+                'level'              => "5",
+            ],
+            [
+                'name'              => "Kuliah",
+                'level'              => "98",
+            ],
+            [
+                'name'              => "Bekerja",
+                'level'              => "99",
             ],
         ];
 
-        foreach ($schoolcores as $schoolcore_data) {
-            $schoolcore = Core::firstOrCreate($schoolcore_data);
+        foreach ($units as $unit) {
+            $unitCreate = Unit::firstOrCreate($unit);
         }
 
         Schema::enableForeignKeyConstraints();

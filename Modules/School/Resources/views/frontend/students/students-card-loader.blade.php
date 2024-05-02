@@ -16,6 +16,10 @@
             @include('school::frontend.students.student-card-medium')
         </div>
     @endforeach
+@else
+    <div class="d-flex justify-content-end text-danger">
+        Tidak ada alumni yang ditemukan! Silakan ganti filter pencarian anda.
+    </div>
 @endif
 </div>
 <div class="d-flex justify-content-end">

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Modules\School\Entities\Student;
+use Modules\Tracer\Entities\Record;
 
 class BackendController extends Controller
 {
@@ -43,6 +45,94 @@ class BackendController extends Controller
             }
         }
 
-        return view('backend.index',compact('alumni_count','alumni_count_work','alumniArray'));
+        $alumni_count_ptn = Student::whereHas('records', function ($query) {
+            $query->where('campus_status', 'PTN')
+                  ->where('level_id', function ($subQuery) {
+                      $subQuery->select('id')
+                               ->from('units')
+                               ->where('name', 'Kuliah')
+                               ->limit(1);
+                  })
+                  ->where('records.id', function ($subQuery) {
+                      $subQuery->select(DB::raw('MIN(records.id)'))
+                               ->from('records')
+                               ->join('units', 'units.id', '=', 'records.level_id')
+                               ->where('units.name', 'Kuliah')
+                               ->whereColumn('records.student_id', 'students.id')
+                               ->groupBy('records.student_id')
+                               ->limit(1);
+                  });
+        })->count();
+
+
+        $alumni_count_pts = Student::whereHas('records', function ($query) {
+            $query->where('campus_status', 'PTS')
+                  ->where('level_id', function ($subQuery) {
+                      // Fetch the 'id' from 'units' where 'name' is 'Kuliah'. Assuming there could be multiple, take the first one.
+                      $subQuery->select('id')
+                               ->from('units')
+                               ->where('name', 'Kuliah')
+                               ->limit(1);
+                  })
+                  ->where('records.id', function ($subQuery) {
+                      // Select the minimum 'id' from 'records' that matches the 'Kuliah' unit and current student.
+                      $subQuery->select(DB::raw('MIN(records.id)'))
+                               ->from('records')
+                               ->join('units', 'units.id', '=', 'records.level_id')
+                               ->where('units.name', 'Kuliah')
+                               ->whereColumn('records.student_id', 'students.id')  // Ensuring it relates to the current student
+                               ->groupBy('records.student_id')  // Group by student_id to ensure we're getting the correct minimum
+                               ->limit(1);
+                  });
+        })->count();
+
+        $studentsWithLatestBekerja = Student::with(['records' => function ($query) {
+            $query->whereHas('unit', function ($q) {
+                $q->where('name', 'Bekerja');
+            })
+            ->latest('created_at')
+            ->take(1);
+        }])->get();
+
+        // Group by income
+        $latestRecordsSubquery = Record::select('student_id', DB::raw('MAX(created_at) as max_date'))
+        ->whereHas('unit', function ($query) {
+            $query->where('name', 'Bekerja');
+        })
+        ->groupBy('student_id');
+
+        \Log::debug(json_encode($latestRecordsSubquery));
+        $incomeDistributionRaw = Record::joinSub($latestRecordsSubquery, 'latest_records', function ($join) {
+            $join->on('records.student_id', '=', 'latest_records.student_id')
+                ->on('records.created_at', '=', 'latest_records.max_date');
+        })
+        ->groupBy('income')
+        ->select('income as name', DB::raw('COUNT(*) as value'))
+        ->get();
+
+        $incomeDistribution =[];
+        $otherIncome = 0;
+        $incomeKey = config('income');
+        foreach($incomeDistributionRaw as $item){
+            if(!array_key_exists($item->name,$incomeKey)){
+                $otherIncome += $item->value;
+                continue;
+            }
+            $trueKey=$incomeKey[$item->name];
+            $incomeDistribution[]= [
+                "name"  => "Golongan ".$item->name+1,
+                "tier"  => $trueKey,
+                "value" => $item->value,
+            ];
+        }
+        $incomeDistribution[]= [
+            "name" => "Golongan Lain",
+            "tier"  => "Other",
+            "value" => $item->value,
+        ];
+
+        \Log::debug(json_encode($incomeDistributionRaw));
+        \Log::debug(json_encode($incomeDistribution));
+        return view('backend.index',compact('alumni_count','alumni_count_work','alumniArray','alumni_count_ptn','alumni_count_pts','incomeDistribution'));
     }
 }

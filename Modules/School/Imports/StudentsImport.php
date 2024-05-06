@@ -77,7 +77,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
             }
 
             $student = Student::updateOrCreate([
-                                'student_id' => $row['student_id'],
+                                'email' => $row['email'],
                             ],[
                             'name'                      => $row['name'],
                             'student_id'                => $row['student_id'],
@@ -105,7 +105,6 @@ class StudentsImport implements ToCollection, WithHeadingRow
             if($zip){
 
                 // foreach ($imageExtensions as $extension) {
-                    \Log::debug($row['photo']);
                     if($row['photo']){
 
                         $photoExist = $zip->has($row['photo'], ZipArchive::FL_NOCASE | ZipArchive::FL_NODIR);
@@ -137,7 +136,6 @@ class StudentsImport implements ToCollection, WithHeadingRow
 
                             }
                         }else{
-
                             $student->save();
                         }
 

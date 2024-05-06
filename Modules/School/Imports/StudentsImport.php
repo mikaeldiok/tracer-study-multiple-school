@@ -46,13 +46,13 @@ class StudentsImport implements ToCollection, WithHeadingRow
 
             $user = User::where('email',$row['email'])->first();
 
-            if(!$user){
+            // if(!$user){
                $user =  $this->createNormalUser($row);
-            }else{
-                if(!$user->userprofile){
-                    event(new UserCreated($user));
-                }
-            }
+            // }else{
+            //     if(!$user->userprofile){
+            //         event(new UserCreated($user));
+            //     }
+            // }
 
             $unitOrigin = "null";
             switch($row['unit_origin']){

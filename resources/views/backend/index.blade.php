@@ -99,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(array_reverse($incomeDistribution) as $item)
+                            @foreach($incomeDistribution as $item)
                                 <tr style="font-size: 18px;">
                                     <td>{{$item["name"]}}</td>
                                     <td>{{$item["tier"]}}</td>

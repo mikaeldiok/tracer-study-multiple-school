@@ -164,6 +164,23 @@ class StudentsImport implements ToCollection, WithHeadingRow
 
             $user = User::updateOrCreate(["email"=>$request["email"]],$data_array->toArray());
 
+            $roles = ["student"];
+
+            // Sync Roles
+            if (isset($roles)) {
+                $user->syncRoles($roles);
+            } else {
+                $roles = [];
+                $user->syncRoles($roles);
+            }
+
+            // Sync Permissions
+            if (isset($permissions)) {
+                $user->syncPermissions($permissions);
+            } else {
+                $permissions = [];
+                $user->syncPermissions($permissions);
+            }
             // Username
             $id = $user->id;
             $username = config('app.initial_username') + $id;

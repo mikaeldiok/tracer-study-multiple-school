@@ -65,7 +65,7 @@
 
             <!-- PTN PTS Tab -->
             <div class="tab-pane fade" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
-                <div class="row my-2">
+                <!-- <div class="row my-2">
                     <div class="col-sm-4">
                         <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                             <div class="card-body">
@@ -82,8 +82,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="campusStatusChart" style="width: 600px;height:400px;"></div>
+                </div> -->
+                <div id="campusStatusChart" class="m-3 p-2" style="width: 800px;height:600px;"></div>
 
             </div>
 

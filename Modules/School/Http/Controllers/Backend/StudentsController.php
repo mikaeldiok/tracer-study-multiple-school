@@ -15,7 +15,7 @@ use Modules\School\DataTables\StudentsInsightDatatable;
 use Modules\School\Services\StudentService;
 use Modules\School\DataTables\StudentsDataTable;
 use Modules\School\Http\Requests\Backend\StudentsRequest;
-use Modules\Tracer\DataTables\StudentRecordsDataTable;
+use Modules\Tracer\DataTables\BackendStudentRecordsDataTable;
 use Modules\Tracer\Services\RecordService;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
@@ -218,7 +218,7 @@ class StudentsController extends Controller
         $module_action = 'List';
 
 
-        $dataTable = new StudentRecordsDataTable($this->recordService,$id);
+        $dataTable = new BackendStudentRecordsDataTable($this->recordService,$id);
         $student = $this->studentService->getStudentById($id)->data;
 
 

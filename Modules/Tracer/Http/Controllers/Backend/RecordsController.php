@@ -113,7 +113,6 @@ class RecordsController extends Controller
         $create = $this->recordService->createSrByID($id);
         $options = $create->data;
         $student_id =  $create->student_id;
-
         return view(
             "tracer::backend.$module_name.create",
             compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','options','student_id')
@@ -214,9 +213,11 @@ class RecordsController extends Controller
 
         $options = $this->recordService->prepareOptions();
 
+        $student_id =  $$module_name_singular->student->id;
+
         return view(
             "tracer::backend.$module_name.edit",
-            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options')
+            compact('module_title', 'module_name', 'module_icon', 'module_name_singular', 'module_action', "$module_name_singular",'options','student_id')
         );
     }
 
@@ -252,8 +253,8 @@ class RecordsController extends Controller
         }else{
             Flash::error("<i class='fas fa-times-circle'></i> Error When ".$module_action." '".Str::singular($module_title)."'")->important();
         }
-
-        return redirect("admin/$module_name");
+        \Log::debug($$module_name_singular);
+        return redirect("admin/students/".$$module_name_singular->student->id);
     }
 
     /**

@@ -110,29 +110,28 @@ class BackendController extends Controller
         ->select('income as name', DB::raw('COUNT(*) as value'))
         ->get();
 
-        $incomeDistribution =[];
+        $incomeDistribution = [];
         $otherIncome = 0;
         $incomeKey = config('income');
-        foreach($incomeDistributionRaw as $item){
-            if(!array_key_exists($item->name,$incomeKey)){
+        foreach ($incomeDistributionRaw as $item) {
+            if (!array_key_exists($item->name, $incomeKey)) {
                 $otherIncome += $item->value;
                 continue;
             }
-            $trueKey=$incomeKey[$item->name];
-            $incomeDistribution[]= [
-                "name"  => "Golongan ".$item->name+1,
-                "tier"  => $trueKey,
+            $incomeInfo = $incomeKey[$item->name];
+            $incomeDistribution[] = [
+                "name"  => "Golongan " . $incomeInfo['type'], // Assuming you still want to increment the name numerically
+                "tier"  => $incomeInfo['value'], // Accessing the 'type' from the new config structure
                 "value" => $item->value,
             ];
         }
-        $incomeDistribution[]= [
+
+        $incomeDistribution[] = [
             "name" => "Golongan Lain",
             "tier"  => "Other",
-            "value" => $item->value,
+            "value" => $otherIncome, // Changed to sum of $otherIncome calculated from unlisted types
         ];
 
-        \Log::debug(json_encode($incomeDistributionRaw));
-        \Log::debug(json_encode($incomeDistribution));
         return view('backend.index',compact('alumni_count','alumni_count_work','alumniArray','alumni_count_ptn','alumni_count_pts','incomeDistribution'));
     }
 }

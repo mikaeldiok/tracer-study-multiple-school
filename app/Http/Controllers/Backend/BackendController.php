@@ -126,11 +126,15 @@ class BackendController extends Controller
             ];
         }
 
-        $incomeDistribution[] = [
-            "name" => "Golongan Lain",
-            "tier"  => "Other",
-            "value" => $otherIncome, // Changed to sum of $otherIncome calculated from unlisted types
-        ];
+        if($otherIncome > 0){
+            $incomeDistribution[] = [
+                "name" => "Golongan Lain",
+                "tier"  => "Other",
+                "value" => $otherIncome, // Changed to sum of $otherIncome calculated from unlisted types
+            ];
+        }
+
+        $incomeDistribution = array_reverse($incomeDistribution);
 
         return view('backend.index',compact('alumni_count','alumni_count_work','alumniArray','alumni_count_ptn','alumni_count_pts','incomeDistribution'));
     }

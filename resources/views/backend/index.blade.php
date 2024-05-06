@@ -100,13 +100,11 @@
                         </thead>
                         <tbody>
                             @foreach(array_reverse($incomeDistribution) as $item)
-                                @if($item["value"] > 0)
-                                    <tr style="font-size: 18px;">
-                                        <td>{{$item["name"]}}</td>
-                                        <td>{{$item["tier"]}}</td>
-                                        <td>{{$item["value"]}}</td>
-                                    </tr>
-                                @endif
+                                <tr style="font-size: 18px;">
+                                    <td>{{$item["name"]}}</td>
+                                    <td>{{$item["tier"]}}</td>
+                                    <td>{{$item["value"]}}</td>
+                                </tr>
                              @endforeach
                         </tbody>
                     </table>

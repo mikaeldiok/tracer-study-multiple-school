@@ -164,10 +164,8 @@ class StudentsImport implements ToCollection, WithHeadingRow
 
             $data_array = Arr::add($data_array, 'email_verified_at', Carbon::now());
 
-            \Log::debug("fuk");
             $user = User::updateOrCreate(["email"=>$request["email"]],$data_array->toArray());
 
-            \Log::debug("fu2k");
             // Username
             $id = $user->id;
             $username = config('app.initial_username') + $id;

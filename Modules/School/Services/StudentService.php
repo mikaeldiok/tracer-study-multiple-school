@@ -345,7 +345,6 @@ class StudentService{
         }
 
         try{
-
             $student = new Student;
             $student->fill($data);
 
@@ -370,8 +369,11 @@ class StudentService{
             }
 
             $student->history_string =implode(',', $history_array);
+            $old_student = Student::findOrFail($id);
 
-            $updating = Student::findOrFail($id)->update($student->toArray());
+            $user = $this->updateNormalUser($request,$old_student->email);
+
+            $updating = $old_student->update($student->toArray());
 
             $updated_student = Student::findOrFail($id);
 
@@ -796,13 +798,13 @@ class StudentService{
         return $user;
     }
 
-    public function updateNormalUser($request){
+    public function updateNormalUser($request,$old_email){
 
         DB::beginTransaction();
 
         try{
             $data_array = $request->except('_token', 'roles', 'permissions', 'password_confirmation');
-            $user = User::where('email', $data_array['email'])->first();
+            $user = User::where('email', $old_email)->first();
             if(!$user){
                 $user = $this->createNormalUser($request);
                 $user->assignRole('student');

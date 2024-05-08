@@ -56,7 +56,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
 
             $unitOrigin = "null";
             switch(strtoupper($row['unit_origin'])){
-                case "KB/TK":
+                case "TK":
                     $unitOrigin = "1";
                     break;
                 case "SD":

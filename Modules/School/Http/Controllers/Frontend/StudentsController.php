@@ -131,8 +131,9 @@ class StudentsController extends Controller
         $unit_origin_request = request()->input('unit_origin');
         $year_graduate_request = request()->input('year_graduate');
 
-        $students = $this->studentService->filterStudents(20,$request)->data;
-
+        $students = $this->studentService->filterStudents(1,$request)->data;
+        \Log::debug(" $unit_origin_request");
+        \Log::debug(" $year_graduate_request");
         if ($request->ajax()) {
             return view("school::frontend.$module_name.students-card-loader",compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular','unit_origin_request','year_graduate_request'), ['students' => $students])->render();
         }

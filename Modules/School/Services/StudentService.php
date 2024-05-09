@@ -116,6 +116,7 @@ class StudentService{
         }
 
         $student = $student->paginate($pagination);
+        $student->appends($request->all());
 
         return (object) array(
             'error'=> false,

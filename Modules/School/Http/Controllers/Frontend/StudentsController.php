@@ -131,7 +131,7 @@ class StudentsController extends Controller
         $unit_origin_request = request()->input('unit_origin');
         $year_graduate_request = request()->input('year_graduate');
 
-        $students = $this->studentService->filterStudents(1,$request)->data;
+        $students = $this->studentService->filterStudents(20,$request)->data;
         \Log::debug(" $unit_origin_request");
         \Log::debug(" $year_graduate_request");
         if ($request->ajax()) {

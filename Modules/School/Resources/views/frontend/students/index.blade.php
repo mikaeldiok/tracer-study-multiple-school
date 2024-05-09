@@ -69,6 +69,12 @@
         $('#filterForm').submit(function(e) {
             e.preventDefault();
 
+            let unitOrigin = $('#unit_origin').val();
+            let yearGraduate = $('#year_graduate').val();
+            if (!unitOrigin || !yearGraduate) {
+                alert('Unit dan Tahun Lulus harus diisi');
+                return; // Prevent form submission
+            }
             $('#submit').html('Please Wait...');
             $("#submit").attr("disabled", true);
 

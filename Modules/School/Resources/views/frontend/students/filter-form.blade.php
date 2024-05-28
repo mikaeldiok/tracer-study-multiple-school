@@ -45,7 +45,7 @@
             $field_lable = __("school::$module_name.$field_name");
             $field_placeholder = $field_lable;
             $required = "";
-            $years = range(1900, date('Y'));
+            $years = range(1970, date('Y'));
             $select_options = array_combine($years, $years);
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}

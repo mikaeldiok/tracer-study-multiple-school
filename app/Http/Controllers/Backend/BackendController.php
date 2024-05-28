@@ -25,7 +25,7 @@ class BackendController extends Controller
 
         $alumniArray = [];
 
-        $years = array_reverse(range(1900, date('Y')));
+        $years = array_reverse(range(1970, date('Y')));
         foreach($years as $year){
             $countKBTK = Student::where('history_string', 'like', "%$year=>1%")->count();
             $countSD = Student::where('history_string', 'like', "%$year=>2%")->count();

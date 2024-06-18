@@ -72,7 +72,7 @@
                             $field_name = 'unit_id';
                             $field_lable = "unit id";
                             $field_placeholder = $field_lable;
-                            $required = "required";
+                            $required = "";
                             $select_options = config('unit-code');
                             ?>
                             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}

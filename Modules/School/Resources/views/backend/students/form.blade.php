@@ -14,6 +14,8 @@
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->select($field_name, $select_options,1)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+            {{ html()->submit($text = icon('fas fa-save')." Simpan Validasi")->class('btn btn-success mt-2') }}
+
         </div>
     </div>
 </div>

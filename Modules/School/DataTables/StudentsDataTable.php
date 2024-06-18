@@ -105,6 +105,11 @@ class StudentsDataTable extends DataTable
         }
 
 
+        if($user->hasRole('unit admin')){
+            $unit_origin = $user->unit_id;
+            $data->where('unit_origin', 'LIKE', "%$unit_origin%");
+        }
+
         return $this->applyScopes($data);
     }
 

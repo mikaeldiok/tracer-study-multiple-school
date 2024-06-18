@@ -28,6 +28,7 @@ class PermissionRoleTableSeeder extends Seeder
         $executive = Role::firstOrCreate(['name' => 'executive']);
         $user = Role::firstOrCreate(['name' => 'user']);
         $student = Role::firstOrCreate(['name' => 'student']);
+        $unit_admin = Role::firstOrCreate(['name' => 'unit admin']);
 
         // Create Permissions
         Permission::firstOrCreate(['name' => 'view_backend']);
@@ -91,6 +92,10 @@ class PermissionRoleTableSeeder extends Seeder
         $student->givePermissionTo('student_area');
         $student->givePermissionTo('view_students');
         $student->givePermissionTo('edit_students');
+
+        $unit_admin->givePermissionTo('view_backend');
+        $unit_admin->givePermissionTo('view_students');
+        $unit_admin->givePermissionTo('edit_students');
 
         Schema::enableForeignKeyConstraints();
     }

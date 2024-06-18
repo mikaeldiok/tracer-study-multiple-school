@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
                 $redirectTo = '/admin';
             }
 
-            if($isStudent && !Auth::user()->isSuperAdmin()){
+            if($isStudent && !Auth::user()->isAdmin()){
                 \Log::debug(Auth::user()->student);
                 $student_id = Auth::user()->student->id;
                 $redirectTo = 'students/'.$student_id;
